@@ -1,0 +1,150 @@
+ function consultarPorCodigo() {
+        const codigo = document.getElementById("codigoInput").value;
+        if (codigo.length !== 17) {
+            alert("O código deve ter exatamente 17 dígitos!");
+            return;
+        }
+    
+        const descricao = gerarDescricaoPorCodigo(codigo);
+    
+        // Separar os dados para a tabela
+        const especie = "CAM CINZA";
+        const apresentacao = descricao.match(/(INT|S\/CABEÇA|DESC PUD TAIL OFF|DESC PUD TAIL ON|DESC PPV TAIL OFF|DESC PPV TAIL ON|DESC PED TAIL OFF|DESC PED TAIL ON)/)[0];
+        const condicao = descricao.match(/(CRU|COZ)/)[0];
+        const estado = descricao.match(/(IN NATURA|CONG IQF|CONG BLOCO)/)[0];
+        const classificacao = descricao.match(/\(\d+\/\d+\)/)[0];
+        const pacote = descricao.match(/PAC \d+G/)[0];
+        const caixa = descricao.match(/CX \d+ KG/)[0];
+    
+        // Adicionar linha à tabela de resultados da consulta por código
+        const tabelaCodigo = document.getElementById("resultadoCodigoTabela");
+        tabelaCodigo.innerHTML = `
+            <tr>
+                <td>${especie}</td>
+                <td>${apresentacao}</td>
+                <td>${condicao}</td>
+                <td>${estado}</td>
+                <td>${classificacao}</td>
+                <td>${pacote}</td>
+                <td>${caixa}</td>
+                <td>${descricao}</td>
+            </tr>
+        `;
+    }
+    
+    function consultarPorDescricao() {
+        const descricao = document.getElementById("descricaoInput").value.toUpperCase();
+        const codigo = gerarCodigoPorDescricao(descricao);
+    
+        // Adicionar linha à tabela de resultados da consulta por descrição
+        const tabelaDescricao = document.getElementById("resultadoDescricaoTabela");
+        tabelaDescricao.innerHTML = `
+            <tr>
+                <td>${codigo}</td>
+            </tr>
+        `;
+    }
+    
+    function gerarDescricaoPorCodigo(codigo) {
+        const especieMap = { "01": "CAM CINZA" };
+        const apresentacaoMap = {
+            "0": "INT",
+            "1": "S/CABEÇA",
+            "2": "DESC PUD TAIL OFF",
+            "3": "DESC PUD TAIL ON",
+            "4": "DESC PPV TAIL OFF",
+            "5": "DESC PPV TAIL ON",
+            "6": "DESC PED TAIL OFF",
+            "7": "DESC PED TAIL ON"
+        };
+        const condicaoMap = { "0": "CRU", "1": "COZ" };
+        const estadoMap = { "0": "IN NATURA", "1": "CONG IQF", "2": "CONG BLOCO" };
+    
+        const especie = especieMap[codigo.substring(0, 2)];
+        const apresentacao = apresentacaoMap[codigo[2]];
+        const condicao = condicaoMap[codigo[3]];
+        const estado = estadoMap[codigo[4]];
+    
+        const classificacao = codigo.substring(5, 11);
+        let tamanho;
+        if (estado === "IN NATURA") {
+            tamanho = `(${parseInt(classificacao)}g)`;
+        } else {
+            if (classificacao.startsWith("00")) {
+                // 4 dígitos
+                tamanho = `(${classificacao.substring(2, 4)}/${classificacao.substring(4)})`;
+            } else if (classificacao.startsWith("0")) {
+                // 5 dígitos
+                tamanho = `(${classificacao.substring(1, 3)}/${classificacao.substring(3)})`;
+            } else {
+                // 6 dígitos
+                tamanho = `(${classificacao.substring(0, 3)}/${classificacao.substring(3)})`;
+            }
+        }
+    
+        const pacote = parseInt(codigo.substring(11, 15)) === 0 ? "" : `PAC ${parseInt(codigo.substring(11, 15))}G`;
+        const caixa = parseInt(codigo.substring(15)) === 0 ? "" : `CX ${parseInt(codigo.substring(15))} KG`;
+    
+        return [
+            especie,
+            apresentacao,
+            condicao,
+            estado,
+            tamanho,
+            pacote,
+            caixa
+        ].filter(Boolean).join(" ");
+    }
+    
+    function gerarCodigoPorDescricao(descricao) {
+        const especieMap = { "CAM CINZA": "01" };
+        const apresentacaoMap = {
+            "INT": "0",
+            "S/CABEÇA": "1",
+            "DESC PUD TAIL OFF": "2",
+            "DESC PUD TAIL ON": "3",
+            "DESC PPV TAIL OFF": "4",
+            "DESC PPV TAIL ON": "5",
+            "DESC PED TAIL OFF": "6",
+            "DESC PED TAIL ON": "7"
+        };
+        const condicaoMap = { "CRU": "0", "COZ": "1" };
+        const estadoMap = { "IN NATURA": "0", "CONG IQF": "1", "CONG BLOCO": "2" };
+    
+        const especie = Object.keys(especieMap).find(key => descricao.includes(key));
+        const apresentacao = Object.keys(apresentacaoMap).find(key => descricao.includes(key));
+        const condicao = Object.keys(condicaoMap).find(key => descricao.includes(key));
+        const estado = Object.keys(estadoMap).find(key => descricao.includes(key));
+    
+        const tamanho = descricao.match(/\((\d+\/\d+|\d+g)\)/)[1];
+        let classificacao;
+        if (tamanho.includes("/")) {
+            const partes = tamanho.split("/");
+            if (partes[0].length === 2 && partes[1].length === 2) {
+                // 4 dígitos
+                classificacao = `00${partes[0]}${partes[1]}`;
+            } else if (partes[0].length === 2 && partes[1].length === 3) {
+                // 5 dígitos
+                classificacao = `0${partes[0]}${partes[1]}`;
+            } else {
+                // 6 dígitos
+                classificacao = `${partes[0]}${partes[1]}`;
+            }
+        } else {
+            // Para IN NATURA
+            classificacao = tamanho.padStart(6, "0");
+        }
+    
+        const pacote = descricao.match(/PAC (\d+)G/)?.[1].padStart(4, "0") || "0000";
+        const caixa = descricao.match(/CX (\d+) KG/)?.[1].padStart(2, "0") || "00";
+    
+        return [
+            especieMap[especie],
+            apresentacaoMap[apresentacao],
+            condicaoMap[condicao],
+            estadoMap[estado],
+            classificacao,
+            pacote,
+            caixa
+        ].join("");
+    }

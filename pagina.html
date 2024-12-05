@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Camarões</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Consulta de Camarões</h1>
+
+        <!-- Botão para Lógica do Código -->
+        <div class="text-center mb-4">
+            <a href="logica_codigo.html" class="btn btn-secondary">Lógica do Código</a>
+        </div>
+
+        <!-- Formulários -->
+        <div class="row mb-4">
+            <!-- Consulta por Código -->
+            <div class="col-md-6">
+                <h3>Consulta por Código</h3>
+                <form id="codigoForm">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <input type="text" id="especie" class="form-control mb-2" maxlength="2" placeholder="Espécie" oninput="atualizarTabelaCodigo()">
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="apresentacao" class="form-control mb-2" maxlength="1" placeholder="Apresentação" oninput="atualizarTabelaCodigo()">
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="condicao" class="form-control mb-2" maxlength="1" placeholder="Condição" oninput="atualizarTabelaCodigo()">
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="estado" class="form-control mb-2" maxlength="1" placeholder="Estado" oninput="atualizarTabelaCodigo()">
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="classificacao" class="form-control mb-2" maxlength="6" placeholder="Classificação" oninput="atualizarTabelaCodigo()">
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="pacote" class="form-control mb-2" maxlength="4" placeholder="Pacote" oninput="atualizarTabelaCodigo()">
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="caixa" class="form-control mb-2" maxlength="2" placeholder="Caixa" oninput="atualizarTabelaCodigo()">
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Consulta por Descrição -->
+            <div class="col-md-6">
+                <h3>Consulta por Descrição</h3>
+                <form id="descricaoForm">
+                    <div class="mb-3">
+                        <label for="descricaoEspecie">Espécie:</label>
+                        <div class="input-group">
+                            <input type="text" id="descricaoEspecie" class="form-control" placeholder="Espécie" readonly>
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Opções</button>
+                            <ul class="dropdown-menu" id="dropdownEspecie">
+                                <!-- Dinamicamente preenchido -->
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="descricaoApresentacao">Apresentação:</label>
+                        <div class="input-group">
+                            <input type="text" id="descricaoApresentacao" class="form-control" placeholder="Apresentação" readonly>
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Opções</button>
+                            <ul class="dropdown-menu" id="dropdownApresentacao">
+                                <!-- Dinamicamente preenchido -->
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="descricaoCondicao">Condição:</label>
+                        <div class="input-group">
+                            <input type="text" id="descricaoCondicao" class="form-control" placeholder="Condição" readonly>
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Opções</button>
+                            <ul class="dropdown-menu" id="dropdownCondicao">
+                                <!-- Dinamicamente preenchido -->
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="descricaoEstado">Estado:</label>
+                        <div class="input-group">
+                            <input type="text" id="descricaoEstado" class="form-control" placeholder="Estado" readonly>
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Opções</button>
+                            <ul class="dropdown-menu" id="dropdownEstado">
+                                <!-- Dinamicamente preenchido -->
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="descricaoClassificacao">Classificação:</label>
+                        <input type="text" id="descricaoClassificacao" class="form-control mb-2" placeholder="Classificação (ex.: 40/50)" oninput="atualizarTabelaDescricao()">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="descricaoPacote">Pacote:</label>
+                        <input type="text" id="descricaoPacote" class="form-control mb-2" placeholder="Pacote (ex.: 150G ou 1KG)" oninput="atualizarTabelaDescricao()">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="descricaoCaixa">Caixa:</label>
+                        <input type="text" id="descricaoCaixa" class="form-control mb-2" placeholder="Caixa (ex.: 6KG)" oninput="atualizarTabelaDescricao()">
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Tabelas de Resultados -->
+        <div class="row">
+            <!-- Resultados da Consulta por Código -->
+            <div class="col-md-12">
+                <h3>Resultados da Consulta por Código</h3>
+                <table class="table table-bordered text-center">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Espécie</th>
+                            <th>Apresentação</th>
+                            <th>Condição</th>
+                            <th>Estado</th>
+                            <th>Classificação</th>
+                            <th>Pacote</th>
+                            <th>Caixa</th>
+                            <th>Descrição Completa</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaCodigo">
+                        <!-- Dinamicamente preenchido -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Resultados da Consulta por Descrição -->
+            <div class="col-md-12 mt-4">
+                <h3>Resultados da Consulta por Descrição</h3>
+                <table class="table table-bordered text-center">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Código</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaDescricao">
+                        <!-- Dinamicamente preenchido -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+ 
+
+
+<script>
+   
+    const especieMap = { "01": "CAM CINZA" };
+    const apresentacaoMap = {
+        "0": "INT",
+        "1": "S/CABEÇA",
+        "2": "DESC PUD TAIL OFF",
+        "3": "DESC PUD TAIL ON",
+        "4": "DESC PPV TAIL OFF",
+        "5": "DESC PPV TAIL ON",
+        "6": "DESC PED TAIL OFF",
+        "7": "DESC PED TAIL ON"
+    };
+    const condicaoMap = { "0": "CRU", "1": "COZ" };
+    const estadoMap = { "0": "IN NATURA", "1": "CONG IQF", "2": "CONG BLOCO" };
+    
+    function formatarClassificacao(classificacao) {
+        if (classificacao.length === 6) {
+            if (classificacao.startsWith("00")) {
+                return `(${classificacao.substring(2, 4)}/${classificacao.substring(4)})`;
+            } else if (classificacao.startsWith("0")) {
+                return `(${classificacao.substring(1, 3)}/${classificacao.substring(3)})`;
+            } else {
+                return `(${classificacao.substring(0, 3)}/${classificacao.substring(3)})`;
+            }
+        }
+        return ""; // Retorna vazio se a classificação for inválida
+    }
+    
+    function converterClassificacaoParaCodigo(classificacao) {
+        const partes = classificacao.replace(/[()]/g, "").split("/");
+        if (partes.length === 2) {
+            const parte1 = partes[0];
+            const parte2 = partes[1];
+    
+            // Lógica para determinar o formato correto
+            if (parte1.length === 2 && parte2.length === 2) {
+                return `00${parte1}${parte2}`;
+            } else if (parte1.length === 2 && parte2.length === 3) {
+                return `0${parte1}${parte2}`;
+            } else if (parte1.length === 3 && parte2.length === 3) {
+                return `${parte1}${parte2}`;
+            }
+        }
+        return "000000"; // Retorna padrão se a classificação for inválida
+    }
+    
+    function formatarPacote(pacote) {
+        const valor = parseInt(pacote, 10); // Converte para número
+        if (!isNaN(valor)) {
+            return valor < 1000 ? `${valor}G` : `${valor / 1000}KG`; // Gramas se < 1000, Quilogramas se >= 1000
+        }
+        return ""; // Retorna vazio se o pacote for inválido
+    }
+    
+    function converterPacoteParaCodigo(pacote) {
+        if (pacote.toUpperCase().endsWith("G")) {
+            const valor = parseInt(pacote.toUpperCase().replace("G", ""), 10);
+            return valor.toString().padStart(4, "0"); // Adiciona zeros à esquerda para gramas
+        } else if (pacote.toUpperCase().endsWith("KG")) {
+            const valor = parseInt(pacote.toUpperCase().replace("KG", ""), 10);
+            return (valor * 1000).toString(); // Converte quilogramas para gramas
+        }
+        return "0000"; // Retorna padrão se o pacote for inválido
+    }
+    
+    function formatarCaixa(caixa) {
+        const valor = parseInt(caixa, 10); // Converte para número
+        return !isNaN(valor) ? `${valor}KG` : ""; // Caixa sempre em quilogramas
+    }
+    
+    function converterCaixaParaCodigo(caixa) {
+        if (caixa.toUpperCase().endsWith("KG")) {
+            const valor = parseInt(caixa.toUpperCase().replace("KG", ""), 10);
+            return valor.toString().padStart(2, "0"); // Adiciona zeros à esquerda
+        }
+        return "00"; // Retorna padrão se a caixa for inválida
+    }
+    
+    function atualizarTabelaCodigo() {
+        const especie = especieMap[document.getElementById("especie").value] || "";
+        const apresentacao = apresentacaoMap[document.getElementById("apresentacao").value] || "";
+        const condicao = condicaoMap[document.getElementById("condicao").value] || "";
+        const estado = estadoMap[document.getElementById("estado").value] || "";
+        const classificacaoInput = document.getElementById("classificacao").value || "";
+        const pacoteInput = document.getElementById("pacote").value || "";
+        const caixaInput = document.getElementById("caixa").value || "";
+    
+        // Formatar classificação, pacote e caixa
+        const classificacao = formatarClassificacao(classificacaoInput);
+        const pacote = formatarPacote(pacoteInput);
+        const caixa = formatarCaixa(caixaInput);
+    
+        // Montar a descrição completa
+        const descricaoCompleta = `${especie} ${apresentacao} ${condicao} ${estado} ${classificacao} PAC ${pacote} CX ${caixa}`;
+    
+        const tabela = document.getElementById("tabelaCodigo");
+        tabela.innerHTML = `
+            <tr>
+                <td>${especie}</td>
+                <td>${apresentacao}</td>
+                <td>${condicao}</td>
+                <td>${estado}</td>
+                <td>${classificacao}</td>
+                <td>${pacote}</td>
+                <td>${caixa}</td>
+                <td>${descricaoCompleta}</td>
+            </tr>
+        `;
+    }
+    
+    function atualizarTabelaDescricao() {
+        const especieInput = document.getElementById("descricaoEspecie").value;
+        const apresentacaoInput = document.getElementById("descricaoApresentacao").value;
+        const condicaoInput = document.getElementById("descricaoCondicao").value;
+        const estadoInput = document.getElementById("descricaoEstado").value;
+        const classificacaoInput = document.getElementById("descricaoClassificacao").value;
+        const pacoteInput = document.getElementById("descricaoPacote").value;
+        const caixaInput = document.getElementById("descricaoCaixa").value;
+    
+        const especie = Object.keys(especieMap).find(key => especieMap[key] === especieInput) || "00";
+        const apresentacao = Object.keys(apresentacaoMap).find(key => apresentacaoMap[key] === apresentacaoInput) || "0";
+        const condicao = Object.keys(condicaoMap).find(key => condicaoMap[key] === condicaoInput) || "0";
+        const estado = Object.keys(estadoMap).find(key => estadoMap[key] === estadoInput) || "0";
+    
+        // Converter classificação, pacote e caixa para o formato de código
+        const classificacao = converterClassificacaoParaCodigo(classificacaoInput);
+        const pacote = converterPacoteParaCodigo(pacoteInput);
+        const caixa = converterCaixaParaCodigo(caixaInput);
+    
+        // Gerar o código final
+        const codigo = `${especie}${apresentacao}${condicao}${estado}${classificacao}${pacote}${caixa}`;
+    
+        // Atualizar a tabela
+        const tabela = document.getElementById("tabelaDescricao");
+        tabela.innerHTML = `
+            <tr>
+                <td>${codigo}</td>
+            </tr>
+        `;
+    }
+    
+    // Função para preencher os filtros dinâmicos
+    function preencherFiltros() {
+        preencherFiltroDinamico("dropdownEspecie", especieMap, "descricaoEspecie");
+        preencherFiltroDinamico("dropdownApresentacao", apresentacaoMap, "descricaoApresentacao");
+        preencherFiltroDinamico("dropdownCondicao", condicaoMap, "descricaoCondicao");
+        preencherFiltroDinamico("dropdownEstado", estadoMap, "descricaoEstado");
+    }
+    
+    // Função genérica para preencher dropdowns
+    function preencherFiltroDinamico(dropdownId, optionsMap, inputId) {
+        const dropdown = document.getElementById(dropdownId);
+        Object.entries(optionsMap).forEach(([key, value]) => {
+            const li = document.createElement("li");
+            li.innerHTML = `<a class="dropdown-item" href="#" onclick="selecionarFiltro('${inputId}', '${value}', '${key}')">${value}</a>`;
+            dropdown.appendChild(li);
+        });
+    }
+    
+    // Função para selecionar um valor do filtro e atualizar o código
+    function selecionarFiltro(campoId, valor, codigo) {
+        const campo = document.getElementById(campoId);
+        campo.value = valor; // Preenche o campo com o valor selecionado
+        campo.dataset.codigo = codigo; // Armazena o código correspondente no dataset
+        atualizarTabelaDescricao(); // Atualiza o código dinamicamente
+    }
+    
+    // Preencher os filtros ao carregar a página
+    window.onload = preencherFiltros;
+    
+</script>

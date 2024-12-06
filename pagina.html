@@ -3,72 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consulta de Camarões</title>
+    <title>Criação de Referências</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        /* Estilo para textos em negrito */
-        .bold {
-            font-weight: bold !important;
-        }
-        body {
-            background-color: #f8f9fa; /* Fundo branco suave */
-            color: #212529; /* Texto em preto escuro */
-            font-size: 0.9rem; /* Reduz o tamanho da fonte para compactar o conteúdo */
-            margin-bottom: 50px;
-        }
-        .form-control, .btn {
-            padding: 0.25rem 0.5rem; /* Reduz o padding dos inputs e botões */
-        }
-        .input-group {
-            flex-wrap: nowrap; /* Garante que os elementos do input-group fiquem na mesma linha */
-        }
-        .dropdown-menu {
-            font-size: 0.9rem; /* Reduz o tamanho da fonte do dropdown */
-        }
-        table {
-            width: 100%;
-            max-width: 90%; /* Reduz o tamanho da tabela em relação à tela */
-            margin: 0 auto; /* Centraliza a tabela */
-        }
-        
-            .container {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            form#descricaoForm .form-control {
-                width: 95%; /* Faz com que as caixas fiquem quase do tamanho da tabela */
-                height: 40px; /* Define uma altura uniforme para todas as caixas */
-                font-size: 1rem; /* Ajusta o tamanho do texto */
-                margin: 0 auto; /* Centraliza as caixas */
-                display: block; /* Garante alinhamento correto */
-            }
-            
-            form#descricaoForm .input-group {
-                width: 95%; /* Aplica o mesmo tamanho para grupos de input */
-                margin: 0 auto; /* Centraliza os grupos */
-            }
-            
-            form#descricaoForm label {
-                display: block; /* Mantém o label acima das caixas */
-                margin-bottom: 0.1rem; /* Espaço entre o label e a caixa */
-                font-size: 0.9rem; /* Ajusta o tamanho do texto do label */
-                text-align: left; /* Alinha o texto no canto superior esquerdo */
-            }
-            
-            .table {
-                max-width: 100%; /* Mantém a tabela responsiva */
-                margin: 0 auto;
-            }
-            .copiar-botao-container {
-                display: flex;
-                justify-content: flex-end; /* Alinha o botão à direita */
-                margin-top: 10px; /* Espaçamento entre a tabela e o botão */
-            }
-            
-            
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <div class="container mt-5">
     <h1 class="text-center">Criação de Referências COPACAM</h1>
@@ -166,7 +103,7 @@
             </tbody>
         </table>
         <div class="copiar-botao-container">
-            <button class="btn btn-primary" onclick="copiarTabela('tabelaDescricao')">Copiar</button>
+            <button class="btn btn-primary" onclick="copiarTabela1('tabelaDescricao')">Copiar</button>
         </div>
         <h3 class="mt-3">Descrição Completa do Código</h3>
         <table class="table table-bordered text-center">
@@ -182,32 +119,19 @@
   
     <!-- Botão de copiar para a tabela "Descrição Completa do Camarão" -->
     <div class="copiar-botao-container">
-    <button class="btn btn-primary" onclick="copiarTextoTabela('tabelaDescricaoCompleta')">Copiar</button>
+    <button class="btn btn-primary" onclick="copiarTabela2('tabelaDescricaoCompleta')">Copiar</button>
     </div>
     </div>
     </div>
 </div>
 
-    
-    
-      
-        
-                
-            
-
-
-
-
-
-
-
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"></script>
-    
     <script src="script.js"></script>
-
+    <script src="dropdown.js"></script>
+    <script src="util.js"></script>
     <script>
-        function copiarTabela(tabelaId) {
+        function copiarTabela1(tabelaId) {
         const tabela = document.getElementById(tabelaId);
         if (!tabela) return;
 
@@ -229,7 +153,7 @@
     </script>
 
     <script>
-        function copiarTextoTabela(idTabela) {
+        function copiarTabela2(idTabela) {
             // Captura o elemento da tabela pelo ID
             const tabela = document.getElementById(idTabela);
         
@@ -248,238 +172,7 @@
         }
         
     </script>
-    
-
 </body>
 </html>
 
 
-
-<script>
-   
-    const especieMap = { "01": "CAM CINZA" };
-    const apresentacaoMap = {
-        "0": "INT",
-        "1": "S/CABEÇA",
-        "2": "DESC PUD TAIL OFF",
-        "3": "DESC PUD TAIL ON",
-        "4": "DESC PPV TAIL OFF",
-        "5": "DESC PPV TAIL ON",
-        "6": "DESC PED TAIL OFF",
-        "7": "DESC PED TAIL ON"
-    };
-    const condicaoMap = { "0": "CRU", "1": "COZ" };
-    const estadoMap = { "0": "IN NATURA", "1": "CONG IQF", "2": "CONG BLOCO" };
-    const pacoteMap = {
-        "0000": "Inválido",
-        "0100": "100G",
-        "0150": "150G",
-        "0200": "200G",
-        "0300": "300G",
-        "0400": "400G",
-        "0500": "500G",
-        "0600": "600G",
-        "0700": "700G",
-        "0800": "800G",
-        "0900": "900G",
-        "1000": "1KG",
-        "2000": "2KG",
-        "3000": "3KG",
-        "4000": "4KG",
-        "5000": "5KG",
-        "6000": "6KG",
-        "7000": "7KG",
-        "8000": "8KG",
-        "9000": "9KG",
-        "10000": "10KG",
-    };
-    
-
-    function formatarClassificacao(classificacao) {
-        // Remove espaços ao redor da entrada
-        const entrada = classificacao.trim();
-    
-        // Verifica se a entrada está no formato "50/80"
-        if (/^\d{2,3}\/\d{2,3}$/.test(entrada)) {
-            return `(${entrada})`; // Normaliza para "(50/80)"
-        }
-    
-        // Verifica se a entrada está no formato "(50/80)"
-        if (/^\(\d{2,3}\/\d{2,3}\)$/.test(entrada)) {
-            return entrada; // Retorna como "(50/80)"
-        }
-        return "Inválido"; // Retorna "Inválido" para entradas fora do padrão
-    }
-    
-    
-    
-    function converterClassificacaoParaCodigo(classificacao) {
-        const partes = classificacao.replace(/[()]/g, "").split("/");
-        if (partes.length === 2) {
-            const parte1 = partes[0];
-            const parte2 = partes[1];
-    
-            // Lógica para determinar o formato correto
-            if (parte1.length === 2 && parte2.length === 2) {
-                return `00${parte1}${parte2}`;
-            } else if (parte1.length === 2 && parte2.length === 3) {
-                return `0${parte1}${parte2}`;
-            } else if (parte1.length === 3 && parte2.length === 3) {
-                return `${parte1}${parte2}`;
-            }
-        }
-      
-        // Retorna uma classificação padrão indicando erro
-        return "Inválido";
-        
-    }
-    
-    
-    function formatarPacote(pacote) {
-    // Remove espaços e verifica se está em maiúsculas
-    const entrada = pacote.trim();
-    if (entrada === entrada.toUpperCase()) {
-        // Verifica se termina com "G" (gramas)
-        if (entrada.endsWith("G")) {
-            const valor = parseInt(entrada.replace("G", ""), 10);
-            if (!isNaN(valor) && valor > 0 && valor < 1000) {
-                return `${valor}G`; // Retorna como "150G", "200G", etc.
-            }
-        }
-        // Verifica se termina com "KG" (quilogramas)
-        else if (entrada.endsWith("KG")) {
-            const valor = parseInt(entrada.replace("KG", ""), 10);
-            if (!isNaN(valor) && valor > 0) {
-                return `${valor}KG`; // Retorna como "5KG", "1KG", etc.
-            }
-        }
-    }
-    return "Inválido"; // Retorna "Inválido" para formatos inesperados
-}
-
-    
-   
-    function formatarCaixa(codigo) {
-        // Remove espaços e verifica se está em maiúsculas e termina com "KG"
-        const entrada = codigo.trim();
-        if (entrada === entrada.toUpperCase() && entrada.endsWith("KG")) {
-            const valor = parseInt(entrada.replace("KG", ""), 10); // Remove "KG" e converte para número
-            if (!isNaN(valor) && valor > 0) {
-                return `${valor}KG`; // Exibe como "5KG", "1KG", etc.
-            }
-        }
-        return "Inválido"; // Retorna "Inválido" para formatos inesperados
-    }
-    
-    
-    
-    
-    function converterCaixaParaCodigo(caixa) {
-        if (caixa.toUpperCase().endsWith("KG")) {
-            const valor = parseInt(caixa.toUpperCase().replace("KG", ""), 10);
-            return valor.toString().padStart(2, "0"); // Retorna sempre 2 dígitos
-        }
-        return "Inválido"; // Retorna padrão se o valor for inválido
-    }
-    
-   
-    
-    // Função para atualizar a tabela de Descrição Completa
-function AtualizarTabelaDescricaoCompleta() {
-    // Captura os valores preenchidos nos campos
-    const especie = document.getElementById("descricaoEspecie").value || "N/A";
-    const apresentacao = document.getElementById("descricaoApresentacao").value || "N/A";
-    const condicao = document.getElementById("descricaoCondicao").value || "N/A";
-    const estado = document.getElementById("descricaoEstado").value || "N/A";
-    const classificacaoInput = document.getElementById("descricaoClassificacao").value || "N/A";
-    const pacote = document.getElementById("descricaoPacote").value || "N/A";
-    const caixaInput = document.getElementById("descricaoCaixa").value || "N/A";
-
-    const classificacao = formatarClassificacao(classificacaoInput);
-    const caixa = formatarCaixa(caixaInput); // Garante que somente códigos válidos sejam formatados
-    // Atualiza a nova tabela
-    const descricaoCompleta = `${especie} ${apresentacao} ${condicao} ${estado} ${classificacao} PAC ${pacote} CX ${caixa}`
-    tabelaDescricaoCompleta.innerHTML = `
-        <tr>
-            <td>${descricaoCompleta}</td>
-        </tr>
-    `;
-}
-
-// Adiciona eventos aos campos de entrada para atualizar a nova tabela
-document.querySelectorAll("#descricaoForm input").forEach(input => {
-    input.addEventListener("input", AtualizarTabelaDescricaoCompleta);
-});
-
-    
-    
-   
-// Função para atualizar a tabela dinamicamente
-function AtualizarTabelaReferencia() {
-    const especieInput = document.getElementById("descricaoEspecie").value || "N/A";
-    const apresentacaoInput = document.getElementById("descricaoApresentacao").value || "N/A";
-    const condicaoInput = document.getElementById("descricaoCondicao").value || "N/A";
-    const estadoInput = document.getElementById("descricaoEstado").value || "N/A";
-    const classificacaoInput = document.getElementById("descricaoClassificacao").value || "N/A";
-    
-    const pacoteInput = document.getElementById("descricaoPacote").value || "N/A";
-    const caixaInput = document.getElementById("descricaoCaixa").value || "N/A";
-
-    const especie = Object.keys(especieMap).find(key => especieMap[key] === especieInput) || "00";
-    const apresentacao = Object.keys(apresentacaoMap).find(key => apresentacaoMap[key] === apresentacaoInput) || "0";
-    const condicao = Object.keys(condicaoMap).find(key => condicaoMap[key] === condicaoInput) || "0";
-    const estado = Object.keys(estadoMap).find(key => estadoMap[key] === estadoInput) || "0";
-    const classificacao = converterClassificacaoParaCodigo(classificacaoInput);
-    const pacote = Object.keys(pacoteMap).find(key => pacoteMap[key] === pacoteInput) || "Inválido";
-    const caixa = converterCaixaParaCodigo(caixaInput);
-
-    const codigoCompleto = `${especie}${apresentacao}${condicao}${estado}${classificacao}${pacote}${caixa}`;
-    const tabela = document.getElementById("tabelaDescricao");
-    tabela.innerHTML = `
-        <tr>
-            <td>${especie}</td>
-            <td>${apresentacao}</td>
-            <td>${condicao}</td>
-            <td>${estado}</td>
-            <td>${classificacao}</td>
-            <td>${pacote}</td>
-            <td>${caixa}</td>
-            <td>${codigoCompleto}</td>
-        </tr>
-    `;
-}
-
-
-// Função para configurar os filtros dinamicamente
-function preencherFiltros() {
-    preencherFiltroDinamico("dropdownEspecie", especieMap, "descricaoEspecie");
-    preencherFiltroDinamico("dropdownApresentacao", apresentacaoMap, "descricaoApresentacao");
-    preencherFiltroDinamico("dropdownCondicao", condicaoMap, "descricaoCondicao");
-    preencherFiltroDinamico("dropdownEstado", estadoMap, "descricaoEstado");
-}
-
-// Função genérica para preencher os filtros
-function preencherFiltroDinamico(dropdownId, optionsMap, inputId) {
-    const dropdown = document.getElementById(dropdownId);
-    Object.entries(optionsMap).forEach(([key, value]) => {
-        const li = document.createElement("li");
-        li.innerHTML = `<a class="dropdown-item" href="#" onclick="selecionarFiltro('${inputId}', '${value}')">${value}</a>`;
-        dropdown.appendChild(li);
-    });
-}
-
-// Função para selecionar um valor no filtro
-function selecionarFiltro(campoId, valor) {
-    const campo = document.getElementById(campoId);
-    campo.value = valor; // Define o valor no campo
-    AtualizarTabelaReferencia(); // Atualiza a tabela
-    AtualizarTabelaDescricaoCompleta(); // Atualiza a tabela
-}
-
-// Configuração ao carregar a página
-document.addEventListener("DOMContentLoaded", () => {
-    preencherFiltros();
-});
-
-    
-</script>

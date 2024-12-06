@@ -11,16 +11,13 @@
             font-weight: bold !important;
         }
         body {
+            background-color: #f8f9fa; /* Fundo branco suave */
+            color: #212529; /* Texto em preto escuro */
             font-size: 0.9rem; /* Reduz o tamanho da fonte para compactar o conteúdo */
+            margin-bottom: 50px;
         }
         .form-control, .btn {
             padding: 0.25rem 0.5rem; /* Reduz o padding dos inputs e botões */
-        }
-        .table-container {
-            margin-right: 10px; /* Adiciona margem à direita das tabelas */
-        }
-        .table th, .table td {
-            padding: 0.25rem; /* Reduz o padding das células da tabela */
         }
         .input-group {
             flex-wrap: nowrap; /* Garante que os elementos do input-group fiquem na mesma linha */
@@ -28,189 +25,176 @@
         .dropdown-menu {
             font-size: 0.9rem; /* Reduz o tamanho da fonte do dropdown */
         }
-        table-container {
-            margin-right: 20px; /* Adiciona marge
+        table {
+            width: 100%;
+            max-width: 90%; /* Reduz o tamanho da tabela em relação à tela */
+            margin: 0 auto; /* Centraliza a tabela */
+        }
+        
+            .container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
             
-            m à direita */}
+            form#descricaoForm .form-control {
+                width: 95%; /* Faz com que as caixas fiquem quase do tamanho da tabela */
+                height: 40px; /* Define uma altura uniforme para todas as caixas */
+                font-size: 1rem; /* Ajusta o tamanho do texto */
+                margin: 0 auto; /* Centraliza as caixas */
+                display: block; /* Garante alinhamento correto */
+            }
+            
+            form#descricaoForm .input-group {
+                width: 95%; /* Aplica o mesmo tamanho para grupos de input */
+                margin: 0 auto; /* Centraliza os grupos */
+            }
+            
+            form#descricaoForm label {
+                display: block; /* Mantém o label acima das caixas */
+                margin-bottom: 0.1rem; /* Espaço entre o label e a caixa */
+                font-size: 0.9rem; /* Ajusta o tamanho do texto do label */
+                text-align: left; /* Alinha o texto no canto superior esquerdo */
+            }
+            
+            .table {
+                max-width: 100%; /* Mantém a tabela responsiva */
+                margin: 0 auto;
+            }
+            .copiar-botao-container {
+                display: flex;
+                justify-content: flex-end; /* Alinha o botão à direita */
+                margin-top: 10px; /* Espaçamento entre a tabela e o botão */
+            }
+            
+            
     </style>
 </head>
-<body>
-    <div class="container mt-5">
-        <h1 class="text-center">Consulta de Camarões</h1>
-        <div class="row mb-4">
-            <!-- Verificar Existência -->
-            <div class="col-md-12">
-                <h3 class="text-left">Verificar Existência</h3>
-                <form id="verificarForm">
-                    <div class="mb-3">
-                        <label for="codigoCompleto">Código Completo:</label>
-                        <input type="text" id="codigoCompleto" class="form-control" placeholder="Digite o código completo">
-                    </div>
-                    <button type="button" class="btn btn-primary" onclick="verificarExistencia()">Verificar</button>
-                </form>
-                <div id="verificacaoResultado" class="mt-4 text-center"></div>
+<div class="container mt-5">
+    <h1 class="text-center">Criação de Referências COPACAM</h1>
+    <form id="descricaoForm" class="mt-4">
+        <!-- Espécie -->
+        <div class="mb-3">
+            <label for="descricaoEspecie" class="form-label">Espécie:</label>
+            <div class="input-group">
+                <input type="text" id="descricaoEspecie" class="form-control" placeholder="Espécie" readonly>
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Opções</button>
+                <ul class="dropdown-menu" id="dropdownEspecie">
+                    <!-- Dinamicamente preenchido -->
+                </ul>
             </div>
         </div>
+
+        <!-- Apresentação -->
+        <div class="mb-3">
+            <label for="descricaoApresentacao" class="form-label">Apresentação:</label>
+            <div class="input-group">
+                <input type="text" id="descricaoApresentacao" class="form-control" placeholder="Apresentação" readonly>
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Opções</button>
+                <ul class="dropdown-menu" id="dropdownApresentacao">
+                    <!-- Dinamicamente preenchido -->
+                </ul>
+            </div>
+        </div>
+
+        <!-- Condição -->
+        <div class="mb-3">
+            <label for="descricaoCondicao" class="form-label">Condição:</label>
+            <div class="input-group">
+                <input type="text" id="descricaoCondicao" class="form-control" placeholder="Condição" readonly>
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Opções</button>
+                <ul class="dropdown-menu" id="dropdownCondicao">
+                    <!-- Dinamicamente preenchido -->
+                </ul>
+            </div>
+        </div>
+
+        <!-- Estado -->
+        <div class="mb-3">
+            <label for="descricaoEstado" class="form-label">Estado:</label>
+            <div class="input-group">
+                <input type="text" id="descricaoEstado" class="form-control" placeholder="Estado" readonly>
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Opções</button>
+                <ul class="dropdown-menu" id="dropdownEstado">
+                    <!-- Dinamicamente preenchido -->
+                </ul>
+            </div>
+        </div>
+
+        <!-- Classificação -->
+        <div class="mb-3">
+            <label for="descricaoClassificacao" class="form-label">Classificação:</label>
+            <input type="text" id="descricaoClassificacao" class="form-control" placeholder="Classificação (ex.: 40/50)" oninput="AtualizarTabelaReferencia()">
+        </div>
+
+        <!-- Pacote -->
+        <div class="mb-3">
+            <label for="descricaoPacote" class="form-label">Pacote:</label>
+            <input type="text" id="descricaoPacote" class="form-control" placeholder="Pacote (ex.: 150G ou 1KG)" oninput="AtualizarTabelaReferencia()">
+        </div>
+
+        <!-- Caixa -->
+        <div class="mb-3">
+            <label for="descricaoCaixa" class="form-label">Caixa:</label>
+            <input type="text" id="descricaoCaixa" class="form-control" placeholder="Caixa (ex.: 6KG)" oninput="AtualizarTabelaReferencia()">
+        </div>
+    </form>
+
+    <!-- Resultados -->
+    <div class="mt-3">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <h3 class="mb-0">Referência do Código</h3>
+        </div>
+        <table class="table table-bordered text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Espécie</th>
+                    <th>Apresentação</th>
+                    <th>Condição</th>
+                    <th>Estado</th>
+                    <th>Classificação</th>
+                    <th>Pacote</th>
+                    <th>Caixa</th>
+                    <th>Referência completa</th>
+                </tr>
+            </thead>
+            <tbody id="tabelaDescricao" class="table">
+                <tbody id="tabelaDescricao">
+                    <tr>
+                </tbody>
+                
+            </tbody>
+        </table>
+        <div class="copiar-botao-container">
+            <button class="btn btn-primary" onclick="copiarTabela('tabelaDescricao')">Copiar</button>
+        </div>
+        <h3 class="mt-3">Descrição Completa do Código</h3>
+        <table class="table table-bordered text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Descrição Completa</th>
+                </tr>
+            </thead>
+            <tbody id="tabelaDescricaoCompleta">
+                <td>Nenhuma descrição disponível</td>
+            </tbody>
+        </table>
+  
+    <!-- Botão de copiar para a tabela "Descrição Completa do Camarão" -->
+    <div class="copiar-botao-container">
+    <button class="btn btn-primary" onclick="copiarTextoTabela('tabelaDescricaoCompleta')">Copiar</button>
     </div>
-    <div class="container mt-5">
-            <!-- Divisão entre Consulta por Código e Consulta por Descrição -->
-            <div class="row mb-4">
-                <!-- Consulta por Código -->
-                <div class="container mt-5">
-                
-                    <!-- Divisão entre Consulta por Código e Consulta por Descrição -->
-                    <div class="row mb-4">
-                        <!-- Consulta por Código -->
-                        <div class="col-md-6">
-                            <h3 class="text-left">Consulta por Código</h3>
-                            <form id="codigoForm">
-                                <div class="mb-3">
-                                    <label for="especie">Espécie:</label>
-                                    <input type="text" id="especie" class="form-control" maxlength="2" placeholder="Espécie" oninput="atualizarTabelaCodigo()">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="apresentacao">Apresentação:</label>
-                                    <input type="text" id="apresentacao" class="form-control" maxlength="1" placeholder="Apresentação" oninput="atualizarTabelaCodigo()">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="condicao">Condição:</label>
-                                    <input type="text" id="condicao" class="form-control" maxlength="1" placeholder="Condição" oninput="atualizarTabelaCodigo()">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="estado">Estado:</label>
-                                    <input type="text" id="estado" class="form-control" maxlength="1" placeholder="Estado" oninput="atualizarTabelaCodigo()">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="classificacao">Classificação:</label>
-                                    <input type="text" id="classificacao" class="form-control" maxlength="6" placeholder="Classificação" oninput="atualizarTabelaCodigo()">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="pacote">Pacote:</label>
-                                    <input type="text" id="pacote" class="form-control" maxlength="4" placeholder="Pacote" oninput="atualizarTabelaCodigo()">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="caixa">Caixa:</label>
-                                    <input type="text" id="caixa" class="form-control" maxlength="2" placeholder="Caixa" oninput="atualizarTabelaCodigo()">
-                                </div>
-                            </form>
-                        </div>
-                
-                        <!-- Consulta por Descrição -->
-                        <div class="col-md-6">
-                            <h3 class="text-left">Consulta por Descrição</h3>
-                            <form id="descricaoForm">
-                                <div class="mb-3">
-                                    <label for="descricaoEspecie">Espécie:</label>
-                                    <div class="input-group">
-                                        <input type="text" id="descricaoEspecie" class="form-control" placeholder="Espécie" readonly>
-                                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Opções</button>
-                                        <ul class="dropdown-menu" id="dropdownEspecie">
-                                            <!-- Dinamicamente preenchido -->
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="descricaoApresentacao">Apresentação:</label>
-                                    <div class="input-group">
-                                        <input type="text" id="descricaoApresentacao" class="form-control" placeholder="Apresentação" readonly>
-                                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Opções</button>
-                                        <ul class="dropdown-menu" id="dropdownApresentacao">
-                                            <!-- Dinamicamente preenchido -->
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="descricaoCondicao">Condição:</label>
-                                    <div class="input-group">
-                                        <input type="text" id="descricaoCondicao" class="form-control" placeholder="Condição" readonly>
-                                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Opções</button>
-                                        <ul class="dropdown-menu" id="dropdownCondicao">
-                                            <!-- Dinamicamente preenchido -->
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="descricaoEstado">Estado:</label>
-                                    <div class="input-group">
-                                        <input type="text" id="descricaoEstado" class="form-control" placeholder="Estado" readonly>
-                                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Opções</button>
-                                        <ul class="dropdown-menu" id="dropdownEstado">
-                                            <!-- Dinamicamente preenchido -->
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="descricaoClassificacao">Classificação:</label>
-                                    <input type="text" id="descricaoClassificacao" class="form-control" placeholder="Classificação (ex.: 40/50)" oninput="atualizarTabelaDescricao()">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="descricaoPacote">Pacote:</label>
-                                    <input type="text" id="descricaoPacote" class="form-control" placeholder="Pacote (ex.: 150G ou 1KG)" oninput="atualizarTabelaDescricao()">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="descricaoCaixa">Caixa:</label>
-                                    <input type="text" id="descricaoCaixa" class="form-control" placeholder="Caixa (ex.: 6KG)" oninput="atualizarTabelaDescricao()">
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <!-- Resultados da Consulta por Código -->
-                    <div class="col-md-12">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <h3 class="mb-0">Resultados da Consulta por Código</h3>
-                            <button class="btn btn-primary" onclick="copiarTabela('tabelaCodigo')">Copiar</button>
-                        </div>
-                        <table class="table table-bordered text-center">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th>Espécie</th>
-                                    <th>Apresentação</th>
-                                    <th>Condição</th>
-                                    <th>Estado</th>
-                                    <th>Classificação</th>
-                                    <th>Pacote</th>
-                                    <th>Caixa</th>
-                                    <th>Descrição Completa</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tabelaCodigo">
-                                <!-- Dinamicamente preenchido -->
-                            </tbody>
-                        </table>
-                    </div>
+    </div>
+    </div>
+</div>
+
+    
+    
+      
         
-                    <!-- Resultados da Consulta por Descrição -->
-                    <div class="col-md-12 mt-4">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <h3 class="mb-0">Resultados da Consulta por Descrição</h3>
-                            <button class="btn btn-primary" onclick="copiarTabela('tabelaDescricao')">Copiar</button>
-                        </div>
-                        <table class="table table-bordered text-center">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th>Espécie</th>
-                                    <th>Apresentação</th>
-                                    <th>Condição</th>
-                                    <th>Estado</th>
-                                    <th>Classificação</th>
-                                    <th>Pacote</th>
-                                    <th>Caixa</th>
-                                    <th>Descrição Completa</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tabelaDescricao">
-                                <!-- Dinamicamente preenchido -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
                 
-            </div>
-        </div>
-    </div>
+            
+
 
 
 
@@ -243,6 +227,29 @@
         );
     }
     </script>
+
+    <script>
+        function copiarTextoTabela(idTabela) {
+            // Captura o elemento da tabela pelo ID
+            const tabela = document.getElementById(idTabela);
+        
+            // Pega o texto interno da tabela e remove espaços extras
+            const texto = tabela.innerText.trim();
+        
+            // Copia o texto para a área de transferência
+            navigator.clipboard.writeText(texto)
+                .then(() => {
+                    alert("Texto copiado com sucesso!");
+                })
+                .catch(err => {
+                    alert("Erro ao copiar o texto.");
+                    console.error(err);
+                });
+        }
+        
+    </script>
+    
+
 </body>
 </html>
 
@@ -264,6 +271,7 @@
     const condicaoMap = { "0": "CRU", "1": "COZ" };
     const estadoMap = { "0": "IN NATURA", "1": "CONG IQF", "2": "CONG BLOCO" };
     const pacoteMap = {
+        "0000": "Inválido",
         "0100": "100G",
         "0150": "150G",
         "0200": "200G",
@@ -283,22 +291,26 @@
         "7000": "7KG",
         "8000": "8KG",
         "9000": "9KG",
-        "10000": "10KG"
+        "10000": "10KG",
     };
     
 
     function formatarClassificacao(classificacao) {
-        if (classificacao && classificacao.length === 6) {
-            if (classificacao.startsWith("00")) {
-                return `(${classificacao.substring(2, 4)}/${classificacao.substring(4)})`;
-            } else if (classificacao.startsWith("0")) {
-                return `(${classificacao.substring(1, 3)}/${classificacao.substring(3)})`;
-            } else {
-                return `(${classificacao.substring(0, 3)}/${classificacao.substring(3)})`;
-            }
+        // Remove espaços ao redor da entrada
+        const entrada = classificacao.trim();
+    
+        // Verifica se a entrada está no formato "50/80"
+        if (/^\d{2,3}\/\d{2,3}$/.test(entrada)) {
+            return `(${entrada})`; // Normaliza para "(50/80)"
         }
-        return "Inválida"; // Indica erro na classificação
+    
+        // Verifica se a entrada está no formato "(50/80)"
+        if (/^\(\d{2,3}\/\d{2,3}\)$/.test(entrada)) {
+            return entrada; // Retorna como "(50/80)"
+        }
+        return "Inválido"; // Retorna "Inválido" para entradas fora do padrão
     }
+    
     
     
     function converterClassificacaoParaCodigo(classificacao) {
@@ -316,59 +328,50 @@
                 return `${parte1}${parte2}`;
             }
         }
+      
         // Retorna uma classificação padrão indicando erro
-        return "000000";
+        return "Inválido";
+        
     }
+    
     
     function formatarPacote(pacote) {
-        // Remove espaços extras
-        const entrada = pacote.trim();
-    
-        // Verifica se o código possui exatamente 4 dígitos numéricos
-        if (/^\d{4}$/.test(entrada)) {
-            const valor = parseInt(entrada, 10); // Converte para número
-    
-            // Retorna gramas ou quilogramas com base no valor
-            return valor < 1000 ? `${valor}G` : `${valor / 1000}KG`;
-        }
-    
-        // Retorna "Inválido" para entradas fora do formato esperado
-        return "Inválido";
-    }
-    
-    function converterPacoteParaCodigo(pacote) {
-        // Remove espaços extras e converte tudo para maiúsculas
-        const entrada = pacote.trim().toUpperCase();
-    
+    // Remove espaços e verifica se está em maiúsculas
+    const entrada = pacote.trim();
+    if (entrada === entrada.toUpperCase()) {
+        // Verifica se termina com "G" (gramas)
         if (entrada.endsWith("G")) {
-            // Pacote em gramas
-            const valor = parseInt(entrada.replace("G", "").trim(), 10);
-            if (!isNaN(valor)) {
-                return valor.toString().padStart(4, "0"); // Sempre 4 dígitos para gramas
-            }
-        } else if (entrada.endsWith("KG")) {
-            // Pacote em quilogramas
-            const valor = parseFloat(entrada.replace("KG", "").trim());
-            if (!isNaN(valor)) {
-                return Math.round(valor * 1000).toString(); // Converte para gramas (multiplica por 1000)
+            const valor = parseInt(entrada.replace("G", ""), 10);
+            if (!isNaN(valor) && valor > 0 && valor < 1000) {
+                return `${valor}G`; // Retorna como "150G", "200G", etc.
             }
         }
-        return "0000"; // Retorna "0000" para entradas inválidas
+        // Verifica se termina com "KG" (quilogramas)
+        else if (entrada.endsWith("KG")) {
+            const valor = parseInt(entrada.replace("KG", ""), 10);
+            if (!isNaN(valor) && valor > 0) {
+                return `${valor}KG`; // Retorna como "5KG", "1KG", etc.
+            }
+        }
     }
-    
+    return "Inválido"; // Retorna "Inválido" para formatos inesperados
+}
+
     
    
-    
     function formatarCaixa(codigo) {
-        // Verifica se o código possui exatamente 2 dígitos
-        if (codigo.length === 2) {
-            const valor = parseInt(codigo, 10); // Converte o código para número
-            if (!isNaN(valor)) {
-                return `${valor}KG`; // Exibe como "2KG", "8KG", etc.
+        // Remove espaços e verifica se está em maiúsculas e termina com "KG"
+        const entrada = codigo.trim();
+        if (entrada === entrada.toUpperCase() && entrada.endsWith("KG")) {
+            const valor = parseInt(entrada.replace("KG", ""), 10); // Remove "KG" e converte para número
+            if (!isNaN(valor) && valor > 0) {
+                return `${valor}KG`; // Exibe como "5KG", "1KG", etc.
             }
         }
-        return ""; // Retorna vazio se o código for inválido ou não tiver 2 dígitos
+        return "Inválido"; // Retorna "Inválido" para formatos inesperados
     }
+    
+    
     
     
     function converterCaixaParaCodigo(caixa) {
@@ -376,135 +379,107 @@
             const valor = parseInt(caixa.toUpperCase().replace("KG", ""), 10);
             return valor.toString().padStart(2, "0"); // Retorna sempre 2 dígitos
         }
-        return "00"; // Retorna padrão se o valor for inválido
+        return "Inválido"; // Retorna padrão se o valor for inválido
     }
     
+   
     
-    
-    function atualizarTabelaCodigo() {
-        const especie = especieMap[document.getElementById("especie").value] || "";
-        const apresentacao = apresentacaoMap[document.getElementById("apresentacao").value] || "";
-        const condicao = condicaoMap[document.getElementById("condicao").value] || "";
-        const estado = estadoMap[document.getElementById("estado").value] || "";
-        const classificacaoInput = document.getElementById("classificacao").value || "";
-        const pacoteInput = document.getElementById("pacote").value || "";
-        const caixaInput = document.getElementById("caixa").value || "";
-    
-        // Validação e formatação dos campos
-        const classificacao = formatarClassificacao(classificacaoInput);
-        const pacote = formatarPacote(pacoteInput);
-        const caixa = formatarCaixa(caixaInput); // Garante que somente códigos válidos sejam formatados
-    
-        const descricaoCompleta = `${especie} ${apresentacao} ${condicao} ${estado} ${classificacao} PAC ${pacote} CX ${caixa}`;
-    
-        // Atualizar a tabela
-        const tabela = document.getElementById("tabelaCodigo");
-        tabela.innerHTML = `
-            <tr>
-                <td>${especie}</td>
-                <td>${apresentacao}</td>
-                <td>${condicao}</td>
-                <td>${estado}</td>
-                <td>${classificacao}</td>
-                <td>${pacote}</td>
-                <td>${caixa}</td>
-                <td>${descricaoCompleta}</td>
-            </tr>
-        `;
-    }
-    
-    
-    
-    
-    
-    function atualizarTabelaDescricao() {
-        const especieInput = document.getElementById("descricaoEspecie").value;
-        const apresentacaoInput = document.getElementById("descricaoApresentacao").value;
-        const condicaoInput = document.getElementById("descricaoCondicao").value;
-        const estadoInput = document.getElementById("descricaoEstado").value;
-        const classificacaoInput = document.getElementById("descricaoClassificacao").value;
-        const pacoteInput = document.getElementById("descricaoPacote").value;
-        const caixaInput = document.getElementById("descricaoCaixa").value;
-    
-        const especie = Object.keys(especieMap).find(key => especieMap[key] === especieInput) || "00";
-        const apresentacao = Object.keys(apresentacaoMap).find(key => apresentacaoMap[key] === apresentacaoInput) || "0";
-        const condicao = Object.keys(condicaoMap).find(key => condicaoMap[key] === condicaoInput) || "0";
-        const estado = Object.keys(estadoMap).find(key => estadoMap[key] === estadoInput) || "0";
-    
-        const classificacao = converterClassificacaoParaCodigo(classificacaoInput);
-        const pacote = Object.keys(pacoteMap).find(key => pacoteMap[key] === pacoteInput) || "0000";
-        const caixa = converterCaixaParaCodigo(caixaInput);
-    
-        const codigoCompleto = `${especie}${apresentacao}${condicao}${estado}${classificacao}${pacote}${caixa}`;
-        const tabela = document.getElementById("tabelaDescricao");
-        tabela.innerHTML = `
-            <tr>
-                <td>${especie}</td>
-                <td>${apresentacao}</td>
-                <td>${condicao}</td>
-                <td>${estado}</td>
-                <td>${classificacao}</td>
-                <td>${pacote}</td>
-                <td>${caixa}</td>
-                <td>${codigoCompleto}</td>
-            </tr>
-        `;
-    }
-    
+    // Função para atualizar a tabela de Descrição Completa
+function AtualizarTabelaDescricaoCompleta() {
+    // Captura os valores preenchidos nos campos
+    const especie = document.getElementById("descricaoEspecie").value || "N/A";
+    const apresentacao = document.getElementById("descricaoApresentacao").value || "N/A";
+    const condicao = document.getElementById("descricaoCondicao").value || "N/A";
+    const estado = document.getElementById("descricaoEstado").value || "N/A";
+    const classificacaoInput = document.getElementById("descricaoClassificacao").value || "N/A";
+    const pacote = document.getElementById("descricaoPacote").value || "N/A";
+    const caixaInput = document.getElementById("descricaoCaixa").value || "N/A";
 
+    const classificacao = formatarClassificacao(classificacaoInput);
+    const caixa = formatarCaixa(caixaInput); // Garante que somente códigos válidos sejam formatados
+    // Atualiza a nova tabela
+    const descricaoCompleta = `${especie} ${apresentacao} ${condicao} ${estado} ${classificacao} PAC ${pacote} CX ${caixa}`
+    tabelaDescricaoCompleta.innerHTML = `
+        <tr>
+            <td>${descricaoCompleta}</td>
+        </tr>
+    `;
+}
 
-// Preencher filtros ao carregar a página
+// Adiciona eventos aos campos de entrada para atualizar a nova tabela
+document.querySelectorAll("#descricaoForm input").forEach(input => {
+    input.addEventListener("input", AtualizarTabelaDescricaoCompleta);
+});
 
     
     
-    // Função para preencher os filtros dinâmicos
-    function preencherFiltros() {
-        preencherFiltroDinamico("dropdownEspecie", especieMap, "descricaoEspecie");
-        preencherFiltroDinamico("dropdownApresentacao", apresentacaoMap, "descricaoApresentacao");
-        preencherFiltroDinamico("dropdownCondicao", condicaoMap, "descricaoCondicao");
-        preencherFiltroDinamico("dropdownEstado", estadoMap, "descricaoEstado");
-        preencherFiltroDinamico("dropdownPacote", pacoteMap, "descricaoPacote");
-    }
+   
+// Função para atualizar a tabela dinamicamente
+function AtualizarTabelaReferencia() {
+    const especieInput = document.getElementById("descricaoEspecie").value || "N/A";
+    const apresentacaoInput = document.getElementById("descricaoApresentacao").value || "N/A";
+    const condicaoInput = document.getElementById("descricaoCondicao").value || "N/A";
+    const estadoInput = document.getElementById("descricaoEstado").value || "N/A";
+    const classificacaoInput = document.getElementById("descricaoClassificacao").value || "N/A";
     
-    // Função genérica para preencher dropdowns
-    function preencherFiltroDinamico(dropdownId, optionsMap, inputId) {
-        const dropdown = document.getElementById(dropdownId);
-        Object.entries(optionsMap).forEach(([key, value]) => {
-            const li = document.createElement("li");
-            li.innerHTML = `<a class="dropdown-item" href="#" onclick="selecionarFiltro('${inputId}', '${value}', '${key}')">${value}</a>`;
-            dropdown.appendChild(li);
-        });
-    }
-    
-    // Função para selecionar um valor do filtro e atualizar o código
-    function selecionarFiltro(campoId, valor, codigo) {
-        const campo = document.getElementById(campoId);
-        campo.value = valor; // Preenche o campo com o valor selecionado
-        campo.dataset.codigo = codigo; // Armazena o código correspondente no dataset
-        atualizarTabelaDescricao(); // Atualiza o código dinamicamente
-    }
-    
-    // Preencher os filtros ao carregar a página
-    window.onload = preencherFiltros;
-    
-</script>
-<script>
-    // Lista de códigos de produtos existentes
-    const produtosExistentes = [
-        "01112002030500004", // Exemplo de código existente
-        "01112002030500005",
-        "01112002040500006",
-    "01211080150100010"
-    ];
+    const pacoteInput = document.getElementById("descricaoPacote").value || "N/A";
+    const caixaInput = document.getElementById("descricaoCaixa").value || "N/A";
 
-    function verificarExistencia() {
-        const codigoInput = document.getElementById("codigoCompleto").value.trim();
-        const resultadoDiv = document.getElementById("verificacaoResultado");
+    const especie = Object.keys(especieMap).find(key => especieMap[key] === especieInput) || "00";
+    const apresentacao = Object.keys(apresentacaoMap).find(key => apresentacaoMap[key] === apresentacaoInput) || "0";
+    const condicao = Object.keys(condicaoMap).find(key => condicaoMap[key] === condicaoInput) || "0";
+    const estado = Object.keys(estadoMap).find(key => estadoMap[key] === estadoInput) || "0";
+    const classificacao = converterClassificacaoParaCodigo(classificacaoInput);
+    const pacote = Object.keys(pacoteMap).find(key => pacoteMap[key] === pacoteInput) || "Inválido";
+    const caixa = converterCaixaParaCodigo(caixaInput);
 
-        if (produtosExistentes.includes(codigoInput)) {
-            resultadoDiv.innerHTML = `<div class="alert alert-success">O código <strong>${codigoInput}</strong> existe nos registros.</div>`;
-        } else {
-            resultadoDiv.innerHTML = `<div class="alert alert-danger">O código <strong>${codigoInput}</strong> não foi encontrado nos registros.</div>`;
-        }
-    }
+    const codigoCompleto = `${especie}${apresentacao}${condicao}${estado}${classificacao}${pacote}${caixa}`;
+    const tabela = document.getElementById("tabelaDescricao");
+    tabela.innerHTML = `
+        <tr>
+            <td>${especie}</td>
+            <td>${apresentacao}</td>
+            <td>${condicao}</td>
+            <td>${estado}</td>
+            <td>${classificacao}</td>
+            <td>${pacote}</td>
+            <td>${caixa}</td>
+            <td>${codigoCompleto}</td>
+        </tr>
+    `;
+}
+
+
+// Função para configurar os filtros dinamicamente
+function preencherFiltros() {
+    preencherFiltroDinamico("dropdownEspecie", especieMap, "descricaoEspecie");
+    preencherFiltroDinamico("dropdownApresentacao", apresentacaoMap, "descricaoApresentacao");
+    preencherFiltroDinamico("dropdownCondicao", condicaoMap, "descricaoCondicao");
+    preencherFiltroDinamico("dropdownEstado", estadoMap, "descricaoEstado");
+}
+
+// Função genérica para preencher os filtros
+function preencherFiltroDinamico(dropdownId, optionsMap, inputId) {
+    const dropdown = document.getElementById(dropdownId);
+    Object.entries(optionsMap).forEach(([key, value]) => {
+        const li = document.createElement("li");
+        li.innerHTML = `<a class="dropdown-item" href="#" onclick="selecionarFiltro('${inputId}', '${value}')">${value}</a>`;
+        dropdown.appendChild(li);
+    });
+}
+
+// Função para selecionar um valor no filtro
+function selecionarFiltro(campoId, valor) {
+    const campo = document.getElementById(campoId);
+    campo.value = valor; // Define o valor no campo
+    AtualizarTabelaReferencia(); // Atualiza a tabela
+    AtualizarTabelaDescricaoCompleta(); // Atualiza a tabela
+}
+
+// Configuração ao carregar a página
+document.addEventListener("DOMContentLoaded", () => {
+    preencherFiltros();
+});
+
+    
 </script>

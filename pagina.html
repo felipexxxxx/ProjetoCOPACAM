@@ -4,164 +4,248 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consulta de Camarões</title>
-    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Estilo para textos em negrito */
+        .bold {
+            font-weight: bold !important;
+        }
+        body {
+            font-size: 0.9rem; /* Reduz o tamanho da fonte para compactar o conteúdo */
+        }
+        .form-control, .btn {
+            padding: 0.25rem 0.5rem; /* Reduz o padding dos inputs e botões */
+        }
+        .table-container {
+            margin-right: 10px; /* Adiciona margem à direita das tabelas */
+        }
+        .table th, .table td {
+            padding: 0.25rem; /* Reduz o padding das células da tabela */
+        }
+        .input-group {
+            flex-wrap: nowrap; /* Garante que os elementos do input-group fiquem na mesma linha */
+        }
+        .dropdown-menu {
+            font-size: 0.9rem; /* Reduz o tamanho da fonte do dropdown */
+        }
+        table-container {
+            margin-right: 20px; /* Adiciona marge
+            
+            m à direita */}
+    </style>
 </head>
 <body>
     <div class="container mt-5">
         <h1 class="text-center">Consulta de Camarões</h1>
-
-        <!-- Botão para Lógica do Código -->
-        <div class="text-center mb-4">
-            <a href="logica_codigo.html" class="btn btn-secondary">Lógica do Código</a>
-        </div>
-
-        <!-- Formulários -->
         <div class="row mb-4">
-            <!-- Consulta por Código -->
-            <div class="col-md-6">
-                <h3>Consulta por Código</h3>
-                <form id="codigoForm">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <input type="text" id="especie" class="form-control mb-2" maxlength="2" placeholder="Espécie" oninput="atualizarTabelaCodigo()">
-                        </div>
-                        <div class="col-md-2">
-                            <input type="text" id="apresentacao" class="form-control mb-2" maxlength="1" placeholder="Apresentação" oninput="atualizarTabelaCodigo()">
-                        </div>
-                        <div class="col-md-2">
-                            <input type="text" id="condicao" class="form-control mb-2" maxlength="1" placeholder="Condição" oninput="atualizarTabelaCodigo()">
-                        </div>
-                        <div class="col-md-2">
-                            <input type="text" id="estado" class="form-control mb-2" maxlength="1" placeholder="Estado" oninput="atualizarTabelaCodigo()">
-                        </div>
-                        <div class="col-md-2">
-                            <input type="text" id="classificacao" class="form-control mb-2" maxlength="6" placeholder="Classificação" oninput="atualizarTabelaCodigo()">
-                        </div>
-                        <div class="col-md-2">
-                            <input type="text" id="pacote" class="form-control mb-2" maxlength="4" placeholder="Pacote" oninput="atualizarTabelaCodigo()">
-                        </div>
-                        <div class="col-md-2">
-                            <input type="text" id="caixa" class="form-control mb-2" maxlength="2" placeholder="Caixa" oninput="atualizarTabelaCodigo()">
-                        </div>
+            <!-- Verificar Existência -->
+            <div class="col-md-12">
+                <h3 class="text-left">Verificar Existência</h3>
+                <form id="verificarForm">
+                    <div class="mb-3">
+                        <label for="codigoCompleto">Código Completo:</label>
+                        <input type="text" id="codigoCompleto" class="form-control" placeholder="Digite o código completo">
                     </div>
+                    <button type="button" class="btn btn-primary" onclick="verificarExistencia()">Verificar</button>
                 </form>
-            </div>
-
-            <!-- Consulta por Descrição -->
-            <div class="col-md-6">
-                <h3>Consulta por Descrição</h3>
-                <form id="descricaoForm">
-                    <div class="mb-3">
-                        <label for="descricaoEspecie">Espécie:</label>
-                        <div class="input-group">
-                            <input type="text" id="descricaoEspecie" class="form-control" placeholder="Espécie" readonly>
-                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Opções</button>
-                            <ul class="dropdown-menu" id="dropdownEspecie">
-                                <!-- Dinamicamente preenchido -->
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="descricaoApresentacao">Apresentação:</label>
-                        <div class="input-group">
-                            <input type="text" id="descricaoApresentacao" class="form-control" placeholder="Apresentação" readonly>
-                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Opções</button>
-                            <ul class="dropdown-menu" id="dropdownApresentacao">
-                                <!-- Dinamicamente preenchido -->
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="descricaoCondicao">Condição:</label>
-                        <div class="input-group">
-                            <input type="text" id="descricaoCondicao" class="form-control" placeholder="Condição" readonly>
-                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Opções</button>
-                            <ul class="dropdown-menu" id="dropdownCondicao">
-                                <!-- Dinamicamente preenchido -->
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="descricaoEstado">Estado:</label>
-                        <div class="input-group">
-                            <input type="text" id="descricaoEstado" class="form-control" placeholder="Estado" readonly>
-                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Opções</button>
-                            <ul class="dropdown-menu" id="dropdownEstado">
-                                <!-- Dinamicamente preenchido -->
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="descricaoClassificacao">Classificação:</label>
-                        <input type="text" id="descricaoClassificacao" class="form-control mb-2" placeholder="Classificação (ex.: 40/50)" oninput="atualizarTabelaDescricao()">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="descricaoPacote">Pacote:</label>
-                        <input type="text" id="descricaoPacote" class="form-control mb-2" placeholder="Pacote (ex.: 150G ou 1KG)" oninput="atualizarTabelaDescricao()">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="descricaoCaixa">Caixa:</label>
-                        <input type="text" id="descricaoCaixa" class="form-control mb-2" placeholder="Caixa (ex.: 6KG)" oninput="atualizarTabelaDescricao()">
-                    </div>
-                </form>
+                <div id="verificacaoResultado" class="mt-4 text-center"></div>
             </div>
         </div>
-
-        <!-- Tabelas de Resultados -->
-        <div class="row">
-            <!-- Resultados da Consulta por Código -->
-            <div class="col-md-12">
-                <h3>Resultados da Consulta por Código</h3>
-                <table class="table table-bordered text-center">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>Espécie</th>
-                            <th>Apresentação</th>
-                            <th>Condição</th>
-                            <th>Estado</th>
-                            <th>Classificação</th>
-                            <th>Pacote</th>
-                            <th>Caixa</th>
-                            <th>Descrição Completa</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tabelaCodigo">
-                        <!-- Dinamicamente preenchido -->
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Resultados da Consulta por Descrição -->
-            <div class="col-md-12 mt-4">
-                <h3>Resultados da Consulta por Descrição</h3>
-                <table class="table table-bordered text-center">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>Código</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tabelaDescricao">
-                        <!-- Dinamicamente preenchido -->
-                    </tbody>
-                </table>
+    </div>
+    <div class="container mt-5">
+            <!-- Divisão entre Consulta por Código e Consulta por Descrição -->
+            <div class="row mb-4">
+                <!-- Consulta por Código -->
+                <div class="container mt-5">
+                
+                    <!-- Divisão entre Consulta por Código e Consulta por Descrição -->
+                    <div class="row mb-4">
+                        <!-- Consulta por Código -->
+                        <div class="col-md-6">
+                            <h3 class="text-left">Consulta por Código</h3>
+                            <form id="codigoForm">
+                                <div class="mb-3">
+                                    <label for="especie">Espécie:</label>
+                                    <input type="text" id="especie" class="form-control" maxlength="2" placeholder="Espécie" oninput="atualizarTabelaCodigo()">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="apresentacao">Apresentação:</label>
+                                    <input type="text" id="apresentacao" class="form-control" maxlength="1" placeholder="Apresentação" oninput="atualizarTabelaCodigo()">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="condicao">Condição:</label>
+                                    <input type="text" id="condicao" class="form-control" maxlength="1" placeholder="Condição" oninput="atualizarTabelaCodigo()">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="estado">Estado:</label>
+                                    <input type="text" id="estado" class="form-control" maxlength="1" placeholder="Estado" oninput="atualizarTabelaCodigo()">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="classificacao">Classificação:</label>
+                                    <input type="text" id="classificacao" class="form-control" maxlength="6" placeholder="Classificação" oninput="atualizarTabelaCodigo()">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="pacote">Pacote:</label>
+                                    <input type="text" id="pacote" class="form-control" maxlength="4" placeholder="Pacote" oninput="atualizarTabelaCodigo()">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="caixa">Caixa:</label>
+                                    <input type="text" id="caixa" class="form-control" maxlength="2" placeholder="Caixa" oninput="atualizarTabelaCodigo()">
+                                </div>
+                            </form>
+                        </div>
+                
+                        <!-- Consulta por Descrição -->
+                        <div class="col-md-6">
+                            <h3 class="text-left">Consulta por Descrição</h3>
+                            <form id="descricaoForm">
+                                <div class="mb-3">
+                                    <label for="descricaoEspecie">Espécie:</label>
+                                    <div class="input-group">
+                                        <input type="text" id="descricaoEspecie" class="form-control" placeholder="Espécie" readonly>
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Opções</button>
+                                        <ul class="dropdown-menu" id="dropdownEspecie">
+                                            <!-- Dinamicamente preenchido -->
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="descricaoApresentacao">Apresentação:</label>
+                                    <div class="input-group">
+                                        <input type="text" id="descricaoApresentacao" class="form-control" placeholder="Apresentação" readonly>
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Opções</button>
+                                        <ul class="dropdown-menu" id="dropdownApresentacao">
+                                            <!-- Dinamicamente preenchido -->
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="descricaoCondicao">Condição:</label>
+                                    <div class="input-group">
+                                        <input type="text" id="descricaoCondicao" class="form-control" placeholder="Condição" readonly>
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Opções</button>
+                                        <ul class="dropdown-menu" id="dropdownCondicao">
+                                            <!-- Dinamicamente preenchido -->
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="descricaoEstado">Estado:</label>
+                                    <div class="input-group">
+                                        <input type="text" id="descricaoEstado" class="form-control" placeholder="Estado" readonly>
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Opções</button>
+                                        <ul class="dropdown-menu" id="dropdownEstado">
+                                            <!-- Dinamicamente preenchido -->
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="descricaoClassificacao">Classificação:</label>
+                                    <input type="text" id="descricaoClassificacao" class="form-control" placeholder="Classificação (ex.: 40/50)" oninput="atualizarTabelaDescricao()">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="descricaoPacote">Pacote:</label>
+                                    <input type="text" id="descricaoPacote" class="form-control" placeholder="Pacote (ex.: 150G ou 1KG)" oninput="atualizarTabelaDescricao()">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="descricaoCaixa">Caixa:</label>
+                                    <input type="text" id="descricaoCaixa" class="form-control" placeholder="Caixa (ex.: 6KG)" oninput="atualizarTabelaDescricao()">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <!-- Resultados da Consulta por Código -->
+                    <div class="col-md-12">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h3 class="mb-0">Resultados da Consulta por Código</h3>
+                            <button class="btn btn-primary" onclick="copiarTabela('tabelaCodigo')">Copiar</button>
+                        </div>
+                        <table class="table table-bordered text-center">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Espécie</th>
+                                    <th>Apresentação</th>
+                                    <th>Condição</th>
+                                    <th>Estado</th>
+                                    <th>Classificação</th>
+                                    <th>Pacote</th>
+                                    <th>Caixa</th>
+                                    <th>Descrição Completa</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabelaCodigo">
+                                <!-- Dinamicamente preenchido -->
+                            </tbody>
+                        </table>
+                    </div>
+        
+                    <!-- Resultados da Consulta por Descrição -->
+                    <div class="col-md-12 mt-4">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h3 class="mb-0">Resultados da Consulta por Descrição</h3>
+                            <button class="btn btn-primary" onclick="copiarTabela('tabelaDescricao')">Copiar</button>
+                        </div>
+                        <table class="table table-bordered text-center">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Espécie</th>
+                                    <th>Apresentação</th>
+                                    <th>Condição</th>
+                                    <th>Estado</th>
+                                    <th>Classificação</th>
+                                    <th>Pacote</th>
+                                    <th>Caixa</th>
+                                    <th>Descrição Completa</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabelaDescricao">
+                                <!-- Dinamicamente preenchido -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
             </div>
         </div>
     </div>
 
-    <script src="script.js"></script>
+
+
+
+
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"></script>
+    
+    <script src="script.js"></script>
+
+    <script>
+        function copiarTabela(tabelaId) {
+        const tabela = document.getElementById(tabelaId);
+        if (!tabela) return;
+
+        let texto = '';
+        const linhas = tabela.getElementsByTagName('tr');
+        for (let i = 0; i < linhas.length; i++) {
+            const colunas = linhas[i].getElementsByTagName('td');
+            if (colunas.length > 0) {
+                const ultimaColuna = colunas[colunas.length - 1].innerText.trim();
+                texto += ultimaColuna + '\n'; // Adiciona a última coluna e uma nova linha
+            }
+        }
+
+        navigator.clipboard.writeText(texto).then(
+            () => alert('Última coluna copiada para a área de transferência!'),
+            (err) => alert('Erro ao copiar a tabela: ' + err)
+        );
+    }
+    </script>
 </body>
 </html>
 
-
- 
 
 
 <script>
@@ -179,9 +263,32 @@
     };
     const condicaoMap = { "0": "CRU", "1": "COZ" };
     const estadoMap = { "0": "IN NATURA", "1": "CONG IQF", "2": "CONG BLOCO" };
+    const pacoteMap = {
+        "0100": "100G",
+        "0150": "150G",
+        "0200": "200G",
+        "0300": "300G",
+        "0400": "400G",
+        "0500": "500G",
+        "0600": "600G",
+        "0700": "700G",
+        "0800": "800G",
+        "0900": "900G",
+        "1000": "1KG",
+        "2000": "2KG",
+        "3000": "3KG",
+        "4000": "4KG",
+        "5000": "5KG",
+        "6000": "6KG",
+        "7000": "7KG",
+        "8000": "8KG",
+        "9000": "9KG",
+        "10000": "10KG"
+    };
     
+
     function formatarClassificacao(classificacao) {
-        if (classificacao.length === 6) {
+        if (classificacao && classificacao.length === 6) {
             if (classificacao.startsWith("00")) {
                 return `(${classificacao.substring(2, 4)}/${classificacao.substring(4)})`;
             } else if (classificacao.startsWith("0")) {
@@ -190,8 +297,9 @@
                 return `(${classificacao.substring(0, 3)}/${classificacao.substring(3)})`;
             }
         }
-        return ""; // Retorna vazio se a classificação for inválida
+        return "Inválida"; // Indica erro na classificação
     }
+    
     
     function converterClassificacaoParaCodigo(classificacao) {
         const partes = classificacao.replace(/[()]/g, "").split("/");
@@ -208,40 +316,70 @@
                 return `${parte1}${parte2}`;
             }
         }
-        return "000000"; // Retorna padrão se a classificação for inválida
+        // Retorna uma classificação padrão indicando erro
+        return "000000";
     }
     
     function formatarPacote(pacote) {
-        const valor = parseInt(pacote, 10); // Converte para número
-        if (!isNaN(valor)) {
-            return valor < 1000 ? `${valor}G` : `${valor / 1000}KG`; // Gramas se < 1000, Quilogramas se >= 1000
+        // Remove espaços extras
+        const entrada = pacote.trim();
+    
+        // Verifica se o código possui exatamente 4 dígitos numéricos
+        if (/^\d{4}$/.test(entrada)) {
+            const valor = parseInt(entrada, 10); // Converte para número
+    
+            // Retorna gramas ou quilogramas com base no valor
+            return valor < 1000 ? `${valor}G` : `${valor / 1000}KG`;
         }
-        return ""; // Retorna vazio se o pacote for inválido
+    
+        // Retorna "Inválido" para entradas fora do formato esperado
+        return "Inválido";
     }
     
     function converterPacoteParaCodigo(pacote) {
-        if (pacote.toUpperCase().endsWith("G")) {
-            const valor = parseInt(pacote.toUpperCase().replace("G", ""), 10);
-            return valor.toString().padStart(4, "0"); // Adiciona zeros à esquerda para gramas
-        } else if (pacote.toUpperCase().endsWith("KG")) {
-            const valor = parseInt(pacote.toUpperCase().replace("KG", ""), 10);
-            return (valor * 1000).toString(); // Converte quilogramas para gramas
+        // Remove espaços extras e converte tudo para maiúsculas
+        const entrada = pacote.trim().toUpperCase();
+    
+        if (entrada.endsWith("G")) {
+            // Pacote em gramas
+            const valor = parseInt(entrada.replace("G", "").trim(), 10);
+            if (!isNaN(valor)) {
+                return valor.toString().padStart(4, "0"); // Sempre 4 dígitos para gramas
+            }
+        } else if (entrada.endsWith("KG")) {
+            // Pacote em quilogramas
+            const valor = parseFloat(entrada.replace("KG", "").trim());
+            if (!isNaN(valor)) {
+                return Math.round(valor * 1000).toString(); // Converte para gramas (multiplica por 1000)
+            }
         }
-        return "0000"; // Retorna padrão se o pacote for inválido
+        return "0000"; // Retorna "0000" para entradas inválidas
     }
     
-    function formatarCaixa(caixa) {
-        const valor = parseInt(caixa, 10); // Converte para número
-        return !isNaN(valor) ? `${valor}KG` : ""; // Caixa sempre em quilogramas
+    
+   
+    
+    function formatarCaixa(codigo) {
+        // Verifica se o código possui exatamente 2 dígitos
+        if (codigo.length === 2) {
+            const valor = parseInt(codigo, 10); // Converte o código para número
+            if (!isNaN(valor)) {
+                return `${valor}KG`; // Exibe como "2KG", "8KG", etc.
+            }
+        }
+        return ""; // Retorna vazio se o código for inválido ou não tiver 2 dígitos
     }
+    
     
     function converterCaixaParaCodigo(caixa) {
         if (caixa.toUpperCase().endsWith("KG")) {
             const valor = parseInt(caixa.toUpperCase().replace("KG", ""), 10);
-            return valor.toString().padStart(2, "0"); // Adiciona zeros à esquerda
+            return valor.toString().padStart(2, "0"); // Retorna sempre 2 dígitos
         }
-        return "00"; // Retorna padrão se a caixa for inválida
+        return "00"; // Retorna padrão se o valor for inválido
     }
+    
+    
     
     function atualizarTabelaCodigo() {
         const especie = especieMap[document.getElementById("especie").value] || "";
@@ -252,14 +390,14 @@
         const pacoteInput = document.getElementById("pacote").value || "";
         const caixaInput = document.getElementById("caixa").value || "";
     
-        // Formatar classificação, pacote e caixa
+        // Validação e formatação dos campos
         const classificacao = formatarClassificacao(classificacaoInput);
         const pacote = formatarPacote(pacoteInput);
-        const caixa = formatarCaixa(caixaInput);
+        const caixa = formatarCaixa(caixaInput); // Garante que somente códigos válidos sejam formatados
     
-        // Montar a descrição completa
         const descricaoCompleta = `${especie} ${apresentacao} ${condicao} ${estado} ${classificacao} PAC ${pacote} CX ${caixa}`;
     
+        // Atualizar a tabela
         const tabela = document.getElementById("tabelaCodigo");
         tabela.innerHTML = `
             <tr>
@@ -275,6 +413,10 @@
         `;
     }
     
+    
+    
+    
+    
     function atualizarTabelaDescricao() {
         const especieInput = document.getElementById("descricaoEspecie").value;
         const apresentacaoInput = document.getElementById("descricaoApresentacao").value;
@@ -289,22 +431,31 @@
         const condicao = Object.keys(condicaoMap).find(key => condicaoMap[key] === condicaoInput) || "0";
         const estado = Object.keys(estadoMap).find(key => estadoMap[key] === estadoInput) || "0";
     
-        // Converter classificação, pacote e caixa para o formato de código
         const classificacao = converterClassificacaoParaCodigo(classificacaoInput);
-        const pacote = converterPacoteParaCodigo(pacoteInput);
+        const pacote = Object.keys(pacoteMap).find(key => pacoteMap[key] === pacoteInput) || "0000";
         const caixa = converterCaixaParaCodigo(caixaInput);
     
-        // Gerar o código final
-        const codigo = `${especie}${apresentacao}${condicao}${estado}${classificacao}${pacote}${caixa}`;
-    
-        // Atualizar a tabela
+        const codigoCompleto = `${especie}${apresentacao}${condicao}${estado}${classificacao}${pacote}${caixa}`;
         const tabela = document.getElementById("tabelaDescricao");
         tabela.innerHTML = `
             <tr>
-                <td>${codigo}</td>
+                <td>${especie}</td>
+                <td>${apresentacao}</td>
+                <td>${condicao}</td>
+                <td>${estado}</td>
+                <td>${classificacao}</td>
+                <td>${pacote}</td>
+                <td>${caixa}</td>
+                <td>${codigoCompleto}</td>
             </tr>
         `;
     }
+    
+
+
+// Preencher filtros ao carregar a página
+
+    
     
     // Função para preencher os filtros dinâmicos
     function preencherFiltros() {
@@ -312,6 +463,7 @@
         preencherFiltroDinamico("dropdownApresentacao", apresentacaoMap, "descricaoApresentacao");
         preencherFiltroDinamico("dropdownCondicao", condicaoMap, "descricaoCondicao");
         preencherFiltroDinamico("dropdownEstado", estadoMap, "descricaoEstado");
+        preencherFiltroDinamico("dropdownPacote", pacoteMap, "descricaoPacote");
     }
     
     // Função genérica para preencher dropdowns
@@ -335,4 +487,24 @@
     // Preencher os filtros ao carregar a página
     window.onload = preencherFiltros;
     
+</script>
+<script>
+    // Lista de códigos de produtos existentes
+    const produtosExistentes = [
+        "01112002030500004", // Exemplo de código existente
+        "01112002030500005",
+        "01112002040500006",
+    "01211080150100010"
+    ];
+
+    function verificarExistencia() {
+        const codigoInput = document.getElementById("codigoCompleto").value.trim();
+        const resultadoDiv = document.getElementById("verificacaoResultado");
+
+        if (produtosExistentes.includes(codigoInput)) {
+            resultadoDiv.innerHTML = `<div class="alert alert-success">O código <strong>${codigoInput}</strong> existe nos registros.</div>`;
+        } else {
+            resultadoDiv.innerHTML = `<div class="alert alert-danger">O código <strong>${codigoInput}</strong> não foi encontrado nos registros.</div>`;
+        }
+    }
 </script>

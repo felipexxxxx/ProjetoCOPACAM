@@ -5,6 +5,7 @@
   --light: #eceff1;
   --dark: #14141f;
 }
+
 body {
   background-color: #f8f9fa; /* Fundo branco suave */
   color: #212529; /* Texto em preto escuro */
@@ -61,7 +62,11 @@ table {
       justify-content: flex-end; /* Alinha o botão à direita */
       margin-top: 10px; /* Espaçamento entre a tabela e o botão */
   }
-  
+  #tabelaDescricao, #tabelaDescricaoCompleta {
+    margin-top: 10px;
+    background-color: #f9f9f9; /* Branco suave */
+}
+
   
 .fw-medium {
   font-weight: 600 !important;

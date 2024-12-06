@@ -76,3 +76,48 @@ function converterCaixaParaCodigo(caixa) {
     return "Inválido"; // Retorna padrão se o valor for inválido
 }
 
+function formatarPecasPorPacote(input) {
+    const entrada = input.trim();
+    const regex = /^\d{1,4}\s?[aA]\s?\d{1,4}$/; // Ex.: "50 a 60", "900 a 1000"
+    if (regex.test(entrada)) {
+        const valores = entrada.match(/\d+/g); // Extrai os números
+        const inicio = parseInt(valores[0], 10); // Primeiro número
+        const fim = parseInt(valores[1], 10);   // Segundo número
+
+        // Verifica se o início é menor ou igual ao fim
+        if (inicio < fim) {
+            return `${inicio} a ${fim}`;
+        } else {
+            return "Inválido"; // Retorna inválido se o início for maior que o fim
+        }
+    }
+    return "Inválido"; // Retorna inválido se o formato não for atendido
+}
+
+function converterPecasPacoteParaCodigo(pecas) {
+    const partes = pecas.replace(/[()]/g, "").split(" a "); // Remove parênteses e separa por "a"
+    if (partes.length === 2) {
+        const parte1 = partes[0].trim(); // Número inicial
+        const parte2 = partes[1].trim(); // Número final
+
+        // Verifica se as partes são válidas
+        if (!isNaN(parte1) && !isNaN(parte2)) {
+            const inicio = parseInt(parte1, 10); // Converte o número inicial para inteiro
+            const fim = parseInt(parte2, 10);    // Converte o número final para inteiro
+
+            // Verifica se o número inicial é menor ou igual ao número final
+            if (inicio < fim) {
+                // Concatena os dois números e preenche à esquerda com zeros para ter exatamente 8 dígitos
+                const codigo = `${inicio.toString()}${fim.toString()}`.padStart(8, "0");
+                return codigo;
+            } else {
+                return "Inválido"; // Retorna inválido se o número inicial for maior que o final
+            }
+        }
+    }
+
+    // Retorna uma classificação padrão indicando erro
+    return "Inválido";
+}
+
+

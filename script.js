@@ -8,13 +8,13 @@ function AtualizarTabelaReferencia() {
     const pacoteInput = document.getElementById("descricaoPacote").value || "N/A";
     const caixaInput = document.getElementById("descricaoCaixa").value || "N/A";
 
-    const especie = Object.keys(especieMap).find(key => especieMap[key] === especieInput) || "00";
-    const apresentacao = Object.keys(apresentacaoMap).find(key => apresentacaoMap[key] === apresentacaoInput) || "0";
-    const condicao = Object.keys(condicaoMap).find(key => condicaoMap[key] === condicaoInput) || "0";
-    const estado = Object.keys(estadoMap).find(key => estadoMap[key] === estadoInput) || "0";
+    const especie = Object.keys(especieMap).find(key => especieMap[key] === especieInput) || "Inválido";
+    const apresentacao = Object.keys(apresentacaoMap).find(key => apresentacaoMap[key] === apresentacaoInput) || "Inválido";
+    const condicao = Object.keys(condicaoMap).find(key => condicaoMap[key] === condicaoInput) || "Inválido";
+    const estado = Object.keys(estadoMap).find(key => estadoMap[key] === estadoInput) || "Inválido";
     const pecas = converterPecasPacoteParaCodigo(pecasInput);
     const classificacao = converterClassificacaoParaCodigo(classificacaoInput);
-    const pacote = Object.keys(pacoteMap).find(key => pacoteMap[key] === pacoteInput) || "Inválido";
+    const pacote = Object.keys(pacoteMap).find(key =>  pacoteMap[key] === pacoteInput) || "Inválido";
     const caixa = converterCaixaParaCodigo(caixaInput);
 
     const codigoCompleto = `${especie}${apresentacao}${condicao}${estado}${pecas}${classificacao}${pacote}${caixa}`;
@@ -37,20 +37,20 @@ function AtualizarTabelaReferencia() {
    // Função para atualizar a tabela de Descrição Completa
 function AtualizarTabelaDescricaoCompleta() {
     // Captura os valores preenchidos nos campos
-    const especie = document.getElementById("descricaoEspecie").value || "N/A";
-    const apresentacao = document.getElementById("descricaoApresentacao").value || "N/A";
-    const condicao = document.getElementById("descricaoCondicao").value || "N/A";
-    const estado = document.getElementById("descricaoEstado").value || "N/A";
-    const pecasInput = document.getElementById("descricaoPecas").value || "N/A";
-    const classificacaoInput = document.getElementById("descricaoClassificacao").value || "N/A";
-    const pacote = document.getElementById("descricaoPacote").value || "N/A";
-    const caixaInput = document.getElementById("descricaoCaixa").value || "N/A";
+    const especie = document.getElementById("descricaoEspecie").value || "Inválido";
+    const apresentacao = document.getElementById("descricaoApresentacao").value || "Inválido";
+    const condicao = document.getElementById("descricaoCondicao").value || "Inválido";
+    const estado = document.getElementById("descricaoEstado").value || "Inválido";
+    const pecasInput = document.getElementById("descricaoPecas").value || "Inválido";
+    const classificacaoInput = document.getElementById("descricaoClassificacao").value || "Inválido";
+    const pacote = document.getElementById("descricaoPacote").value || "Inválido";
+    const caixaInput = document.getElementById("descricaoCaixa").value || "Inválido";
 
     const pecas = formatarPecasPorPacote(pecasInput);
     const classificacao = formatarClassificacao(classificacaoInput);
     const caixa = formatarCaixa(caixaInput); // Garante que somente códigos válidos sejam formatados
     // Atualiza a nova tabela
-    const descricaoCompleta = `${especie} ${apresentacao} ${condicao} ${estado} ${pecas} ${classificacao} PAC ${pacote} CX ${caixa}`
+    const descricaoCompleta = `${especie} ${apresentacao} ${condicao} ${estado} ${pecas} ${classificacao} PAC ${pacote} ${caixa}`
     tabelaDescricaoCompleta.innerHTML = `
         <tr>
             <td>${descricaoCompleta}</td>

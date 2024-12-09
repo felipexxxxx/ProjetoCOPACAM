@@ -14,27 +14,7 @@ function formatarClassificacao(classificacao) {
     return "Inválido"; // Retorna "Inválido" para entradas fora do padrão
 }
 
-function formatarPacote(pacote) {
-    // Remove espaços e verifica se está em maiúsculas
-    const entrada = pacote.trim();
-    if (entrada === entrada.toUpperCase()) {
-        // Verifica se termina com "G" (gramas)
-        if (entrada.endsWith("G")) {
-            const valor = parseInt(entrada.replace("G", ""), 10);
-            if (!isNaN(valor) && valor > 0 && valor < 1000) {
-                return `${valor}G`; // Retorna como "150G", "200G", etc.
-            }
-        }
-        // Verifica se termina com "KG" (quilogramas)
-        else if (entrada.endsWith("KG")) {
-            const valor = parseInt(entrada.replace("KG", ""), 10);
-            if (!isNaN(valor) && valor > 0) {
-                return `${valor}KG`; // Retorna como "5KG", "1KG", etc.
-            }
-        }
-    }
-    return "Inválido"; // Retorna "Inválido" para formatos inesperados
-}
+
 
 function formatarCaixa(codigo) {
     // Remove espaços e verifica se está em maiúsculas e termina com "KG"
@@ -42,7 +22,7 @@ function formatarCaixa(codigo) {
     if (entrada === entrada.toUpperCase() && entrada.endsWith("KG")) {
         const valor = parseInt(entrada.replace("KG", ""), 10); // Remove "KG" e converte para número
         if (!isNaN(valor) && valor > 0) {
-            return `${valor}KG`; // Exibe como "5KG", "1KG", etc.
+            return `CX ${valor}KG`; // Exibe como "5KG", "1KG", etc.
         }
     }
     return "Inválido"; // Retorna "Inválido" para formatos inesperados

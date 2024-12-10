@@ -5,6 +5,10 @@
   --light: #eceff1;
   --dark: #14141f;
 }
+.copiar-botao-container {
+  text-align: right; /* Alinha o botão à direita */
+  margin-top: 10px; /* Adiciona um pequeno espaçamento superior */
+}
 
 body {
   background-color: #f8f9fa; /* Fundo branco suave */

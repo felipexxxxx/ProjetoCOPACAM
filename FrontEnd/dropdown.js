@@ -10,30 +10,20 @@ const especieMap = { "01": "CAM CINZA" };
         "7": "DESC PED TAIL ON"
     };
     const condicaoMap = { "0": "CRU", "1": "COZ" };
-    const estadoMap = { "000": "IN NATURA", "100": "CONG IQF", "110": "CONG IQF 10", "115": "CONG IQF 15", "120": "CONG IQF 20", "200": "CONG BLOCO", "210": "CONG BLOCO 10", "215": "CONG BLOCO 15"  };
+    const estadoMap = { "000": "IN NATURA", "100": "CONG IQF", "110": "CONG IQF10", "115": "CONG IQF15", "120": "CONG IQF20", "200": "CONG BLOCO", "210": "CONG BLOCO10", "215": "CONG BLOCO15", "220": "CONG BLOCO20"  };
     const pacoteMap = {
-        "00000": "Inválido",
-        "00100": "100G",
         "00150": "150G",
         "00200": "200G",
         "00300": "300G",
-        "00400": "400G",
-        "00500": "500G",
-        "00600": "600G",
-        "00700": "700G",
-        "00800": "800G",
-        "00900": "900G",
         "01000": "1KG",
-        "02000": "2KG",
-        "03000": "3KG",
-        "04000": "4KG",
         "05000": "5KG",
-        "06000": "6KG",
-        "07000": "7KG",
-        "08000": "8KG",
-        "09000": "9KG",
-        "10000": "10KG",
     };
+    const caixaMap = {
+        "10":"10KG",
+        "08":"8KG",
+        "06":"6KG"
+        
+    }
 
 
 // Função para configurar os filtros dinamicamente
@@ -42,6 +32,8 @@ function preencherFiltros() {
     preencherFiltroDinamico("dropdownApresentacao", apresentacaoMap, "descricaoApresentacao");
     preencherFiltroDinamico("dropdownCondicao", condicaoMap, "descricaoCondicao");
     preencherFiltroDinamico("dropdownEstado", estadoMap, "descricaoEstado");
+    preencherFiltroDinamico("dropdownPacote", pacoteMap, "descricaoPacote");
+    preencherFiltroDinamico("dropdownCaixa", caixaMap, "descricaoCaixa");
 }
 
 // Função genérica para preencher os filtros

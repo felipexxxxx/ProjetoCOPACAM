@@ -1,18 +1,21 @@
-function formatarClassificacao(classificacao) {
-    // Remove espaços ao redor da entrada
-    const entrada = classificacao.trim();
-
-    // Verifica se a entrada está no formato "50/80"
-    if (/^\d{2,3}\/\d{2,3}$/.test(entrada)) {
-        return `(${entrada})`; // Normaliza para "(50/80)"
+function formatarClassificacao(minima, maxima) {
+    // Remove espaços ao redor e verifica se os valores são válidos
+    if (!minima || !maxima || isNaN(minima) || isNaN(maxima)) {
+        return "Inválido"; // Retorna inválido se os valores não forem números válidos
     }
 
-    // Verifica se a entrada está no formato "(50/80)"
-    if (/^\(\d{2,3}\/\d{2,3}\)$/.test(entrada)) {
-        return entrada; // Retorna como "(50/80)"
+    const valorMinimo = parseInt(minima.trim(), 10); // Converte o valor mínimo para inteiro
+    const valorMaximo = parseInt(maxima.trim(), 10); // Converte o valor máximo para inteiro
+
+    // Verifica se o valor mínimo é menor que o valor máximo
+    if (valorMinimo < valorMaximo) {
+        // Retorna a classificação no formato "(X/Y)"
+        return `(${valorMinimo}/${valorMaximo})`;
     }
-    return "Inválido"; // Retorna "Inválido" para entradas fora do padrão
+
+    return "Inválido"; // Retorna inválido se o valor mínimo for maior ou igual ao valor máximo
 }
+
 
 
 
@@ -28,26 +31,6 @@ function formatarCaixa(codigo) {
     return "Inválido"; // Retorna "Inválido" para formatos inesperados
 }
 
-function converterClassificacaoParaCodigo(classificacao) {
-    const partes = classificacao.replace(/[()]/g, "").split("/");
-    if (partes.length === 2) {
-        const parte1 = partes[0];
-        const parte2 = partes[1];
-
-        // Lógica para determinar o formato correto
-        if (parte1.length === 2 && parte2.length === 2) {
-            return `00${parte1}${parte2}`;
-        } else if (parte1.length === 2 && parte2.length === 3) {
-            return `0${parte1}${parte2}`;
-        } else if (parte1.length === 3 && parte2.length === 3) {
-            return `${parte1}${parte2}`;
-        }
-    }
-  
-    // Retorna uma classificação padrão indicando erro
-    return "Inválido";
-
-}
 function converterCaixaParaCodigo(caixa) {
     if (caixa.toUpperCase().endsWith("KG")) {
         const valor = parseInt(caixa.toUpperCase().replace("KG", ""), 10);
@@ -56,48 +39,85 @@ function converterCaixaParaCodigo(caixa) {
     return "Inválido"; // Retorna padrão se o valor for inválido
 }
 
-function formatarPecasPorPacote(input) {
-    const entrada = input.trim();
-    const regex = /^\d{1,4}\s?[aA]\s?\d{1,4}$/; // Ex.: "50 a 60", "900 a 1000"
-    if (regex.test(entrada)) {
-        const valores = entrada.match(/\d+/g); // Extrai os números
-        const inicio = parseInt(valores[0], 10); // Primeiro número
-        const fim = parseInt(valores[1], 10);   // Segundo número
-
-        // Verifica se o início é menor ou igual ao fim
-        if (inicio < fim) {
-            return `${inicio} a ${fim}`;
-        } else {
-            return "Inválido"; // Retorna inválido se o início for maior que o fim
-        }
-    }
-    return "Inválido"; // Retorna inválido se o formato não for atendido
-}
-
-function converterPecasPacoteParaCodigo(pecas) {
-    const partes = pecas.replace(/[()]/g, "").split(" a "); // Remove parênteses e separa por "a"
-    if (partes.length === 2) {
-        const parte1 = partes[0].trim(); // Número inicial
-        const parte2 = partes[1].trim(); // Número final
-
-        // Verifica se as partes são válidas
-        if (!isNaN(parte1) && !isNaN(parte2)) {
-            const inicio = parseInt(parte1, 10); // Converte o número inicial para inteiro
-            const fim = parseInt(parte2, 10);    // Converte o número final para inteiro
-
-            // Verifica se o número inicial é menor ou igual ao número final
-            if (inicio < fim) {
-                // Concatena os dois números e preenche à esquerda com zeros para ter exatamente 8 dígitos
-                const codigo = `${inicio.toString()}${fim.toString()}`.padStart(8, "0");
-                return codigo;
-            } else {
-                return "Inválido"; // Retorna inválido se o número inicial for maior que o final
-            }
-        }
+function formatarPecasPorPacote(minima, maxima) {
+    // Verifica se os valores são válidos e não estão vazios
+    if (!minima || !maxima || isNaN(minima) || isNaN(maxima)) {
+        return "Inválido"; // Retorna inválido se os valores não forem números válidos
     }
 
-    // Retorna uma classificação padrão indicando erro
-    return "Inválido";
+    const inicio = parseInt(minima.trim(), 10); // Converte o valor mínimo para inteiro
+    const fim = parseInt(maxima.trim(), 10);   // Converte o valor máximo para inteiro
+
+    // Verifica se o valor mínimo é menor que o máximo
+    if (inicio < fim) {
+        // Retorna a descrição no formato correto
+        return `${inicio} a ${fim} `;
+    }
+
+    return "Inválido"; // Retorna inválido se a validação falhar
 }
 
+
+
+
+function converterPecasParaCodigo(minima, maxima) {
+    // Verifica se as partes são válidas
+    if (!minima || !maxima || isNaN(minima) || isNaN(maxima)) {
+        return "Inválido"; // Retorna inválido caso as entradas não sejam números válidos
+    }
+
+    const inicio = parseInt(minima.trim(), 10); // Converte o número inicial para inteiro
+    const fim = parseInt(maxima.trim(), 10);    // Converte o número final para inteiro
+
+    // Verifica se o número inicial é menor que o número final
+    if (inicio < fim) {
+        // Concatena os dois números e preenche à esquerda com zeros para ter exatamente 8 dígitos
+        const codigo = `${inicio}${fim}`.padStart(8, "0");
+        return codigo;
+    }
+
+    return "Inválido"; // Retorna inválido se o número inicial for maior ou igual ao número final
+}
+
+function converterClassificacaoParaCodigo(minima, maxima) {
+    // Valida se as entradas são válidas e não nulas
+    if (!minima || !maxima || isNaN(minima) || isNaN(maxima)) {
+        return "Inválido"; // Retorna inválido se não forem números válidos
+    }
+
+    const inicio = parseInt(minima.trim(), 10); // Converte a mínima para inteiro
+    const fim = parseInt(maxima.trim(), 10);    // Converte a máxima para inteiro
+
+    // Verifica se a mínima é menor que a máxima
+    if (inicio < fim) {
+        // Concatena os dois números e preenche à esquerda com zeros para ter exatamente 8 dígitos
+        const codigo = `${inicio}${fim}`.padStart(6, "0");
+        return codigo;
+    }
+
+    return "Inválido"; // Retorna inválido se a mínima for maior ou igual à máxima
+}
+
+function formatarPacote(descricao) {
+    // Remove espaços e converte para maiúsculas
+    const entrada = descricao.trim().toUpperCase();
+
+    // Verifica se o formato é válido para gramas (ex.: "150G")
+    if (/^\d+G$/.test(entrada)) {
+        const valor = parseInt(entrada.replace("G", ""), 10); // Remove "G" e converte para número
+        if (!isNaN(valor) && valor > 0) {
+            return `PAC ${valor}G`; // Retorna "PAC XG"
+        }
+    }
+
+    // Verifica se o formato é válido para quilogramas (ex.: "1KG")
+    if (/^\d+KG$/.test(entrada)) {
+        const valor = parseInt(entrada.replace("KG", ""), 10); // Remove "KG" e converte para número
+        if (!isNaN(valor) && valor > 0) {
+            return `PAC ${valor}KG`; // Retorna "PAC XKG"
+        }
+    }
+
+    return "Inválido"; // Retorna inválido para formatos inesperados
+}
 

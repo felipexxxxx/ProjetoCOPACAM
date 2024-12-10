@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <div class="container mt-5">
-    <h1 class="text-center">Criação de Referências COPACAM</h1>
+    <h1 class="text-center">Tabela de Criação de Referências e Descrições de Produtos</h1>
         <div class="d-flex justify-content-start mb-2">
             <div class="text-center mt-3">
                 <a href="https://drive.google.com/file/d/1_koWDCajuZYPj60zWTu8rbYzoRcut_xV/preview" target="_blank" class="btn btn-secondary">
@@ -20,7 +20,7 @@
     
         <!-- Espécie -->
         <div class="mb-3">
-            <label for="descricaoEspecie" class="form-label">Espécie:</label>
+            <label for="descricaoEspecie" class="form-label">Produto primário:</label>
             <div class="input-group">
                 <input type="text" id="descricaoEspecie" class="form-control" placeholder="Espécie" readonly>
                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Opções</button>
@@ -46,7 +46,7 @@
         <div class="mb-3">
             <label for="descricaoCondicao" class="form-label">Estado:</label>
             <div class="input-group">
-                <input type="text" id="descricaoCondicao" class="form-control" placeholder="Condição" readonly>
+                <input type="text" id="descricaoCondicao" class="form-control" placeholder="Estado" readonly>
                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Opções</button>
                 <ul class="dropdown-menu" id="dropdownCondicao">
                     <!-- Dinamicamente preenchido -->
@@ -56,9 +56,9 @@
 
         <!-- Estado -->
         <div class="mb-3">
-            <label for="descricaoEstado" class="form-label">Conservação:</label>
+            <label for="descricaoEstado" class="form-label">Tipo de Conservação:</label>
             <div class="input-group">
-                <input type="text" id="descricaoEstado" class="form-control" placeholder="Estado" readonly>
+                <input type="text" id="descricaoEstado" class="form-control" placeholder="Tipo de Conservação" readonly>
                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Opções</button>
                 <ul class="dropdown-menu" id="dropdownEstado">
                     <!-- Dinamicamente preenchido -->
@@ -67,25 +67,42 @@
         </div>
         <div class="mb-3">
             <label for="descricaoPecas" class="form-label">Peças p/pacote:</label>
-            <input type="text" id="descricaoPecas" class="form-control" placeholder="Peças p/pacote (ex.: 70 a 105)" oninput="AtualizarTabelaReferencia()">
+            <div class="input-group">
+                <input type="text" id="pecasMinima" class="form-control" placeholder="Mínimo (ex.:70)" oninput="AtualizarTabelaReferencia()">
+                <input type="text" id="pecasMaxima" class="form-control" placeholder="Máximo (ex.:100)" oninput="AtualizarTabelaReferencia()">
+            </div>
         </div>
 
         <!-- Classificação -->
         <div class="mb-3">
             <label for="descricaoClassificacao" class="form-label">Classificação:</label>
-            <input type="text" id="descricaoClassificacao" class="form-control" placeholder="Classificação (ex.: 40/50)" oninput="AtualizarTabelaReferencia()">
+            <div class="input-group">
+                <input type="text" id="classificacaoMinima" class="form-control" placeholder="Mínimo (ex.:40)" oninput="AtualizarTabelaReferencia()">
+                <input type="text" id="classificacaoMaxima" class="form-control" placeholder="Máximo (ex.:50)" oninput="AtualizarTabelaReferencia()">
+            </div>
         </div>
 
         <!-- Pacote -->
         <div class="mb-3">
             <label for="descricaoPacote" class="form-label">Pacote:</label>
-            <input type="text" id="descricaoPacote" class="form-control" placeholder="Pacote (ex.: 150G ou 1KG)" oninput="AtualizarTabelaReferencia()">
+            <div class="input-group">
+                <input type="text" id="descricaoPacote" class="form-control" placeholder="Pacote" readonly>
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Opções</button>
+                <ul class="dropdown-menu" id="dropdownPacote">
+                    <!-- Dinamicamente preenchido -->
+                </ul>
+            </div>
         </div>
-
         <!-- Caixa -->
         <div class="mb-3">
             <label for="descricaoCaixa" class="form-label">Caixa:</label>
-            <input type="text" id="descricaoCaixa" class="form-control" placeholder="Caixa (ex.: 6KG)" oninput="AtualizarTabelaReferencia()">
+            <div class="input-group">
+                <input type="text" id="descricaoCaixa" class="form-control" placeholder="Caixa" readonly>
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Opções</button>
+                <ul class="dropdown-menu" id="dropdownCaixa">
+                    <!-- Dinamicamente preenchido -->
+                </ul>
+            </div>
         </div>
     </form>
 
@@ -100,11 +117,11 @@
                     <th>Produto primário</th>
                     <th>Apresentação</th>
                     <th>Estado</th>
-                    <th>Conservação</th>
+                    <th>Tipo de Conservação</th>
                     <th>Peças p/pacote</th>
                     <th>Classificação</th>
-                    <th>Pacote</th>
-                    <th>Caixa</th>
+                    <th>Pacote (G)</th>
+                    <th>Caixa (KG)</th>
                     <th>Referência completa</th>
                 </tr>
             </thead>
@@ -184,10 +201,6 @@
                 });
         }
 
-        function abrirArquivoWord() {
-        const url = "CRITICA TABELA CRIAÇÃO REFERENCIAS FELIPE.docx"; // Caminho para o arquivo .docx (no mesmo diretório que o HTML)
-        window.open(url, "_blank"); // Abre o arquivo em uma nova aba
-}
 
         
     </script>

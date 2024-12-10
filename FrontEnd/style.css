@@ -75,3 +75,12 @@ table {
 .fw-semi-bold {
   font-weight: 700 !important;
 }
+
+.input-group .form-control {
+  width: 50%; /* Faz com que cada campo ocupe metade da largura */
+  margin-right: 5px; /* Espaçamento entre os campos */
+}
+
+.input-group .form-control:last-child {
+  margin-right: 0; /* Remove o espaçamento no último campo */
+}

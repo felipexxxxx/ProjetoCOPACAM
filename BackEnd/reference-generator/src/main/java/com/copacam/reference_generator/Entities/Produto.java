@@ -1,8 +1,11 @@
 package com.copacam.reference_generator.Entities;
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,5 +31,11 @@ import lombok.Setter;
     private String pacote;
     private String caixa;
     private String descricao;
+    private LocalDateTime dataInsercao;
+    
+     @PrePersist
+    private void prePersist() {
+        this.dataInsercao = LocalDateTime.now();
+    }
 
 }

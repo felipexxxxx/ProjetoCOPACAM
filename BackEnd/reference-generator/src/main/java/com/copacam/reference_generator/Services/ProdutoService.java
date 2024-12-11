@@ -38,7 +38,9 @@ public class ProdutoService {
             produtoDTO.getClassificacao(),
             produtoDTO.getPacote(),
             produtoDTO.getCaixa(),
-            produtoDTO.getDescricao()
+            produtoDTO.getDescricao(),
+            produtoDTO.getDataInsercao()
+            
         );
 
         return produtoRepository.save(produto);
@@ -57,7 +59,8 @@ public class ProdutoService {
             produtoInNaturaDTO.getEspecie(),
             produtoInNaturaDTO.getApresentacao(),
             produtoInNaturaDTO.getGramatura(),
-            produtoInNaturaDTO.getDescricao()
+            produtoInNaturaDTO.getDescricao(),
+            produtoInNaturaDTO.getDataInsercao()
 
         );
 

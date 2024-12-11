@@ -4,5 +4,6 @@ CREATE TABLE produto_in_natura (
     especie VARCHAR(50) NOT NULL,
     apresentacao VARCHAR(50) NOT NULL,
     gramatura CHAR(3) NOT NULL,
-    descricao VARCHAR(255)
+    descricao TEXT NOT NULL,
+    data_insercao DATETIME NOT NULL
 );

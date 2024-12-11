@@ -1,9 +1,12 @@
 package com.copacam.reference_generator.Entities;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,5 +25,10 @@ public class ProdutoInNatura {
     private String apresentacao;
     private String gramatura;
     private String descricao; 
+    private LocalDateTime dataInsercao;
     
+     @PrePersist
+    private void prePersist() {
+        this.dataInsercao = LocalDateTime.now();
+    }
 }

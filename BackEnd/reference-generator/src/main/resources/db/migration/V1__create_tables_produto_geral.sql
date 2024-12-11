@@ -9,5 +9,6 @@ CREATE TABLE produto (
     classificacao VARCHAR(20),
     pacote VARCHAR(20),
     caixa VARCHAR(20),
-    descricao TEXT NOT NULL
+    descricao TEXT NOT NULL,
+    data_insercao DATETIME NOT NULL
 );

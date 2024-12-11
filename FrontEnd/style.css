@@ -23,6 +23,37 @@
 
  
 }
+/* Garantir que todas as tabelas tenham o mesmo estilo */
+table {
+  width: 100%; /* Mesma largura para todas as tabelas */
+  border-collapse: collapse; /* Colapsar bordas para uniformidade */
+  margin-top: 20px;
+}
+
+thead {
+  background-color: #343a40; /* Cor de fundo consistente */
+  color: #fff; /* Cor do texto */
+}
+
+th, td {
+  padding: 10px; /* Espaçamento interno */
+  text-align: center; /* Texto centralizado */
+  border: 1px solid #dee2e6; /* Borda consistente */
+  font-size: 16px; /* Tamanho da fonte consistente */
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f8f9fa; /* Alternância de cores nas linhas */
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #fff; /* Fundo branco para linhas ímpares */
+}
+
+/* Espaçamento adicional entre tabelas */
+#tabelaProdutosInNaturaContainer {
+  margin-top: 40px;
+}
 
 body {
   background-color: #f8f9fa; /* Fundo branco suave */

@@ -163,8 +163,11 @@
         <!-- O conteúdo será preenchido dinamicamente -->
         </tbody>
     </table>
+    
     <div id="botaoCopiarTabelaInNatura" class="copiar-botao-container text-end" style="display: none;">
+        <button id="criarProdutoInNatura" class="btn btn-success">Criar Produto In Natura</button>
         <button class="btn btn-primary" onclick="copiarTabela1('tabelaDescricaoInNatura')">Copiar</button>
+        
     </div>
     
     
@@ -208,22 +211,26 @@
             for (let i = 0; i < linhas.length; i++) {
                 const colunas = linhas[i].getElementsByTagName('td');
                 if (colunas.length > 0) {
-                    const ultimaColuna = colunas[colunas.length - 1].innerText.trim();
-        
-                    // Verificar se o código tem exatamente 28 dígitos e é composto apenas por números
-                    if (ultimaColuna.length !== 28 || !/^\d{28}$/.test(ultimaColuna) ) {
-                        alert("Erro: O código está incorreto. Verifique se todos os campos estão preenchidos corretamente.");
+                    const ultimaColuna = colunas[colunas.length - 1].innerText.trim(); // Pega a última coluna
+                    if (validarCodigoCompleto(ultimaColuna)) { // Valida o código completo
+                        texto += ultimaColuna + '\n'; // Adiciona a última coluna e uma nova linha
+                    } else {
+                        alert('Erro: O código está incorreto. Verifique se todos os campos estão preenchidos corretamente.');
                         return;
                     }
-        
-                    texto += ultimaColuna + '\n'; // Adiciona a última coluna e uma nova linha
                 }
             }
         
             navigator.clipboard.writeText(texto).then(
-                () => alert('Texto copiado com sucesso!'),
+                () => alert('Última coluna copiada para a área de transferência!'),
                 (err) => alert('Erro ao copiar a tabela: ' + err)
             );
+        }
+        
+        // Função de validação do código completo
+        function validarCodigoCompleto(codigo) {
+            const somenteNumeros = codigo.replace(/\s/g, '').length; // Remove os espaços e conta os números
+            return somenteNumeros === 28 && /^[0-9\s]+$/.test(codigo); // Valida 28 dígitos numéricos com espaços
         }
         
         

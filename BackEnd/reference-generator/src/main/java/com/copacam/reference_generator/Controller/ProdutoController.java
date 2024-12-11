@@ -1,6 +1,9 @@
 package com.copacam.reference_generator.Controller;
 
 import com.copacam.reference_generator.DTOs.ProdutoListResponseDTO;
+import com.copacam.reference_generator.DTOs.ProdutoListResponseNaturaDTO;
+import com.copacam.reference_generator.DTOs.ProdutoInNaturaDTO;
+import com.copacam.reference_generator.Entities.ProdutoInNatura;
 import com.copacam.reference_generator.DTOs.ProdutoDTO;
 import com.copacam.reference_generator.Entities.Produto;
 import com.copacam.reference_generator.Services.ProdutoService;
@@ -22,13 +25,17 @@ public class ProdutoController {
     public ResponseEntity<?> salvarProduto(@RequestBody ProdutoDTO produtoDTO) {
         try {
             Produto salvo = produtoService.salvarProduto(produtoDTO);
-            System.out.println("Código completo recebido: " + produtoDTO.getCodigoCompleto());
+            return ResponseEntity.ok(salvo);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
-            Map<String, Object> resposta = new HashMap<>();
-            resposta.put("mensagem", "Produto criado com sucesso!");
-            resposta.put("produto", salvo);
-
-            return ResponseEntity.ok(resposta);
+    @PostMapping("/natura")
+    public ResponseEntity<?> salvarProdutoInNatura(@RequestBody ProdutoInNaturaDTO produtoInNaturaDTO) {
+        try {
+            ProdutoInNatura salvo = produtoService.salvarProdutoInNatura(produtoInNaturaDTO);
+            return ResponseEntity.ok(salvo);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -36,7 +43,11 @@ public class ProdutoController {
 
     @GetMapping
     public ResponseEntity<List<ProdutoListResponseDTO>> listarProdutos() {
-        List<ProdutoListResponseDTO> produtos = produtoService.listarProdutos();
-        return ResponseEntity.ok(produtos);
+        return ResponseEntity.ok(produtoService.listarProdutos());
+    }
+
+    @GetMapping("/natura")
+    public ResponseEntity<List<ProdutoListResponseNaturaDTO>> listarProdutosInNatura() {
+        return ResponseEntity.ok(produtoService.listarProdutosInNatura());
     }
 }

@@ -1,6 +1,6 @@
 function formatarClassificacao(minima, maxima) {
     // Remove espaços ao redor e verifica se os valores são válidos
-    if (!minima || !maxima || isNaN(minima) || isNaN(maxima)) {
+    if (!minima || !maxima || isNaN(minima) || isNaN(maxima) || minima ==0  || maxima ==0) {
         return "Inválido"; // Retorna inválido se os valores não forem números válidos
     }
 
@@ -41,7 +41,7 @@ function converterCaixaParaCodigo(caixa) {
 
 function formatarPecasPorPacote(minima, maxima) {
     // Verifica se os valores são válidos e não estão vazios
-    if (!minima || !maxima || isNaN(minima) || isNaN(maxima)) {
+    if (!minima || !maxima || isNaN(minima) || isNaN(maxima) || minima ==0  || maxima ==0) {
         return "Inválido"; // Retorna inválido se os valores não forem números válidos
     }
 
@@ -62,7 +62,7 @@ function formatarPecasPorPacote(minima, maxima) {
 
 function converterPecasParaCodigo(minima, maxima) {
     // Verifica se as partes são válidas
-    if (!minima || !maxima || isNaN(minima) || isNaN(maxima)) {
+    if (!minima || !maxima || isNaN(minima) || isNaN(maxima) || minima ==0  || maxima ==0) {
         return "Inválido"; // Retorna inválido caso as entradas não sejam números válidos
     }
 
@@ -81,7 +81,7 @@ function converterPecasParaCodigo(minima, maxima) {
 
 function converterClassificacaoParaCodigo(minima, maxima) {
     // Valida se as entradas são válidas e não nulas
-    if (!minima || !maxima || isNaN(minima) || isNaN(maxima)) {
+    if (!minima || !maxima || isNaN(minima) || isNaN(maxima) || minima ==0  || maxima ==0) {
         return "Inválido"; // Retorna inválido se não forem números válidos
     }
 

@@ -17,9 +17,9 @@
         <!-- Título -->
         <h1 class="text-center mt-4">Lista de Camarões</h1>
 
-        <!-- Tabela -->
-        <table class="table table-bordered text-center mt-4">
-            <thead class="thead-dark">
+        <!-- Tabela de Camarões Regulares -->
+        <table class="table table-bordered text-center">
+            <thead>
                 <tr>
                     <th>Código Completo</th>
                     <th>Descrição</th>
@@ -29,8 +29,24 @@
                 <!-- Os dados serão preenchidos dinamicamente -->
             </tbody>
         </table>
-    </div>
 
+        <!-- Tabela de Camarões IN NATURA -->
+        <table class="table table-bordered text-center">
+            <h1 class="text-center mt-4">Lista de Camarões IN NATURA</h1>
+            <table class="table table-bordered text-center">
+                <thead>
+                    <tr>
+                        <th>Código Completo</th>
+                        <th>Descrição</th>
+                    </tr>
+                </thead>
+                <tbody id="tabelaProdutosInNatura">
+                    <!-- Conteúdo preenchido dinamicamente -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
     <!-- Script para funcionalidades -->
     <script src="api.js"></script>
     <script>
@@ -40,7 +56,10 @@
         });
 
         // Chamar a função para carregar os camarões ao abrir a página
-        window.onload = carregarCamaroes;
+        window.onload = () => {
+            carregarCamaroes();
+            carregarProdutosInNatura();
+        };
     </script>
 </body>
 </html>

@@ -12,7 +12,7 @@ function AtualizarTabelaReferencia() {
     let codigoCompleto;
 
     if (apresentacaoInput === "0") { // "IN NATURA" selecionado
-        codigoCompleto = `${especieInput}${apresentacaoInput}0000000000000000000000${gramaturaInput}`; // Código de 28 dígitos
+        codigoCompleto = `${especieInput} ${apresentacaoInput} 0000000000000000000000 ${gramaturaInput}`; // Código de 28 dígitos
 
         // Preencher valores na tabela IN NATURA
         const tabelaInNaturaBody = document.getElementById("tabelaDescricaoInNatura");
@@ -30,6 +30,7 @@ function AtualizarTabelaReferencia() {
         document.getElementById("botaoCopiarTabelaOriginal").style.display = "none"; // Oculta o botão da tabela original
         document.getElementById("tabelaInNatura").style.display = "table"; // Exibe tabela IN NATURA
         document.getElementById("botaoCopiarTabelaInNatura").style.display = "block"; // Exibe o botão da tabela IN NATURA
+    
     } else {
         const estadoInput = Object.keys(estadoMap).find(key => estadoMap[key] === document.getElementById("descricaoEstado").value) || "-";
         const condicaoInput = Object.keys(condicaoMap).find(key => condicaoMap[key] === document.getElementById("descricaoCondicao").value) || "-";
@@ -45,7 +46,7 @@ function AtualizarTabelaReferencia() {
         const pacoteInput = Object.keys(pacoteMap).find(key => pacoteMap[key] === document.getElementById("descricaoPacote").value) || "-";
         const caixaInput = Object.keys(caixaMap).find(key => caixaMap[key] === document.getElementById("descricaoCaixa").value) || "-";
 
-        codigoCompleto = `${especieInput}${apresentacaoInput}${estadoInput}${condicaoInput}${pecasCodigo}${classificacaoCodigo}${pacoteInput}${caixaInput}`;
+        codigoCompleto = `${especieInput} ${apresentacaoInput} ${estadoInput} ${condicaoInput} ${pecasCodigo} ${classificacaoCodigo} ${pacoteInput} ${caixaInput}`;
 
         // Preencher valores na tabela original
         const tabelaOriginalBody = document.getElementById("tabelaDescricao");
@@ -68,6 +69,7 @@ function AtualizarTabelaReferencia() {
         document.getElementById("botaoCopiarTabelaOriginal").style.display = "block"; // Oculta o botão da tabela original
         document.getElementById("tabelaInNatura").style.display = "none"; // Oculta tabela IN NATURA
         document.getElementById("botaoCopiarTabelaInNatura").style.display = "none"; // Exibe o botão da tabela IN NATURA
+   
     }
 }
 

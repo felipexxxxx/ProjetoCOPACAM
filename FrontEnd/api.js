@@ -6,7 +6,6 @@ document.getElementById("criarProduto").addEventListener("click", async () => {
             return; // Cancela a criação se o usuário não confirmar
         }
 
-    
         const especie = Object.keys(especieMap).find(key => especieMap[key] === document.getElementById("descricaoEspecie").value);
         const apresentacao = Object.keys(apresentacaoMap).find(key => apresentacaoMap[key] === document.getElementById("descricaoApresentacao").value);
         const estado = Object.keys(estadoMap).find(key => estadoMap[key] === document.getElementById("descricaoEstado").value);
@@ -35,24 +34,15 @@ document.getElementById("criarProduto").addEventListener("click", async () => {
             caixa
         ];
 
-        const camposInvalidos = camposNumericos.some(campo => isNaN(campo) || campo.trim() === "");
+        const camposInvalidos = camposNumericos.some(campo => campo === undefined || isNaN(campo) || campo.trim() === "");
 
         if (camposInvalidos) {
             alert("Todos os campos devem ser preenchidos corretamente!");
             return;
         }
 
-        // Preenchimento específico para IN NATURA
-        let codigoCompleto;
-        if (apresentacao === "0") { // IN NATURA
-            const gramatura = document.getElementById("descricaoGramatura")?.value;
-
-            // Validação para garantir que a gramatura seja numérica e limitada a 3 dígitos
-            const gramaturaValida = gramatura.replace(/[^0-9]/g, "").padStart(3, '0').slice(-3);
-            codigoCompleto = `${especie}${apresentacao}0000000000000000000000${gramaturaValida}`;
-        } else {
-            codigoCompleto = `${especie}${apresentacao}${estado}${tipoConservacao}${pecas}${classificacao}${pacote}${caixa}`.padEnd(28, '0');
-        }
+        // Geração do código completo com padding para garantir o tamanho fixo
+        const codigoCompleto = `${especie} ${apresentacao} ${estado} ${tipoConservacao} ${pecas.padStart(8, '0')} ${classificacao.padStart(6, '0')} ${pacote.padStart(5, '0')} ${caixa.padStart(2, '0')}`;
 
         const produto = {
             codigoCompleto,
@@ -83,6 +73,54 @@ document.getElementById("criarProduto").addEventListener("click", async () => {
     }
 });
 
+document.getElementById("criarProdutoInNatura").addEventListener("click", async () => {
+    try {
+        // Exibir aviso de confirmação
+        const confirmacao = confirm("Você tem certeza de que deseja criar este produto?");
+        if (!confirmacao) {
+            return; // Cancela a criação se o usuário não confirmar
+        }
+        // Obter os elementos e verificar se eles existem
+        const especie = Object.keys(especieMap).find(key => especieMap[key] === document.getElementById("descricaoEspecie").value);
+        const apresentacao = Object.keys(apresentacaoMap).find(key => apresentacaoMap[key] === document.getElementById("descricaoApresentacao").value);
+        const gramaturaInput = document.getElementById("descricaoGramatura");
+        const descricao = document.getElementById("tabelaDescricaoCompleta")?.innerText || "";
+        let gramatura = gramaturaInput.value
+
+        // Validar os valores
+        if (!especie || !apresentacao || !gramatura) {
+            alert("Todos os campos são obrigatórios.");
+            return;
+        }
+        if(gramatura==0){
+            alert("Gramatura não pode ser 0");
+            return;
+        }
+
+        gramatura = gramatura.toString().padStart(3, '0');
+        // Gerar o código completo com base na lógica específica
+        const codigoCompleto = `${especie} ${apresentacao} ${"0".repeat(24)} ${gramatura.padStart(3, '0')}`;
+
+        // Criar o objeto do produto
+        const produtoInNatura = { codigoCompleto, especie, apresentacao, gramatura, descricao };
+
+        // Fazer a requisição POST
+        const response = await fetch("http://localhost:8080/produtos/natura", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(produtoInNatura),
+        });
+
+        if (response.ok) {
+            alert("Produto IN NATURA criado com sucesso!");
+        } else {
+            alert(`Erro ao criar produto IN NATURA: ${await response.text()}`);
+        }
+    } catch (err) {
+        alert(`Erro ao se comunicar com o servidor: ${err.message}`);
+    }
+});
+
  // Carrega os dados ao abrir a página
  async function carregarCamaroes() {
     try {
@@ -105,5 +143,29 @@ document.getElementById("criarProduto").addEventListener("click", async () => {
         });
     } catch (error) {
         alert("Erro ao buscar camarões: " + error.message);
+    }
+}
+
+async function carregarProdutosInNatura() {
+    try {
+        const response = await fetch("http://localhost:8080/produtos/natura");
+        if (!response.ok) {
+            throw new Error("Erro ao buscar produtos IN NATURA: " + response.statusText);
+        }
+
+        const produtosInNatura = await response.json();
+        const tabelaProdutosInNatura = document.getElementById("tabelaProdutosInNatura");
+        tabelaProdutosInNatura.innerHTML = ""; // Limpa a tabela
+
+        produtosInNatura.forEach(produto => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${produto.codigoCompleto}</td>
+                <td>${produto.descricao}</td>
+            `;
+            tabelaProdutosInNatura.appendChild(row);
+        });
+    } catch (error) {
+        alert("Erro ao buscar camarões IN NATURA: " + error.message);
     }
 }

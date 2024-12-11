@@ -106,7 +106,7 @@ function formatarPacote(descricao) {
     if (/^\d+G$/.test(entrada)) {
         const valor = parseInt(entrada.replace("G", ""), 10); // Remove "G" e converte para número
         if (!isNaN(valor) && valor > 0) {
-            return `PAC ${valor}G`; // Retorna "PAC XG"
+            return `PAC ${valor}g`; // Retorna "PAC XG"
         }
     }
 

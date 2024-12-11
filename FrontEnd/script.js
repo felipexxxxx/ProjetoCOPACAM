@@ -31,8 +31,9 @@ function AtualizarTabelaReferencia() {
         document.getElementById("tabelaInNatura").style.display = "table"; // Exibe tabela IN NATURA
         document.getElementById("botaoCopiarTabelaInNatura").style.display = "block"; // Exibe o botão da tabela IN NATURA
     } else {
-        const condicaoInput = Object.keys(condicaoMap).find(key => condicaoMap[key] === document.getElementById("descricaoCondicao").value) || "-";
         const estadoInput = Object.keys(estadoMap).find(key => estadoMap[key] === document.getElementById("descricaoEstado").value) || "-";
+        const condicaoInput = Object.keys(condicaoMap).find(key => condicaoMap[key] === document.getElementById("descricaoCondicao").value) || "-";
+       
         const pecasCodigo = converterPecasParaCodigo(
             document.getElementById("pecasMinima").value,
             document.getElementById("pecasMaxima").value
@@ -44,7 +45,7 @@ function AtualizarTabelaReferencia() {
         const pacoteInput = Object.keys(pacoteMap).find(key => pacoteMap[key] === document.getElementById("descricaoPacote").value) || "-";
         const caixaInput = Object.keys(caixaMap).find(key => caixaMap[key] === document.getElementById("descricaoCaixa").value) || "-";
 
-        codigoCompleto = `${especieInput}${apresentacaoInput}${condicaoInput}${estadoInput}${pecasCodigo}${classificacaoCodigo}${pacoteInput}${caixaInput}`;
+        codigoCompleto = `${especieInput}${apresentacaoInput}${estadoInput}${condicaoInput}${pecasCodigo}${classificacaoCodigo}${pacoteInput}${caixaInput}`;
 
         // Preencher valores na tabela original
         const tabelaOriginalBody = document.getElementById("tabelaDescricao");
@@ -52,8 +53,8 @@ function AtualizarTabelaReferencia() {
             <tr>
                 <td>${especieInput}</td>
                 <td>${apresentacaoInput}</td>
-                <td>${condicaoInput}</td>
                 <td>${estadoInput}</td>
+                <td>${condicaoInput}</td>
                 <td>${pecasCodigo}</td>
                 <td>${classificacaoCodigo}</td>
                 <td>${pacoteInput}</td>

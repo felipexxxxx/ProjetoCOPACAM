@@ -10,11 +10,11 @@ const especieMap = { "01": "CAM CINZA" };
         "7": "DESC PED TAIL OFF",
         "8": "DESC PED TAIL ON"
     };
-    const condicaoMap = { "0": "CRU", "1": "COZ" };
-    const estadoMap = { "100": "CONG IQF", "110": "CONG IQF10", "115": "CONG IQF15", "120": "CONG IQF20", "200": "CONG BLOCO", "210": "CONG BLOCO10", "215": "CONG BLOCO15", "220": "CONG BLOCO20"  };
+    const estadoMap = { "0": "CRU", "1": "COZ" };
+    const condicaoMap = { "100": "CONG IQF", "110": "CONG IQF10", "115": "CONG IQF15", "120": "CONG IQF20", "200": "CONG BLOCO", "210": "CONG BLOCO10", "215": "CONG BLOCO15", "220": "CONG BLOCO20"  };
     const pacoteMap = {
-        "05000": "5Kg",
-        "01000": "1Kg",
+        "05000": "5KG",
+        "01000": "1KG",
         "00300": "300g",
         "00200": "200g",
         "00150": "150g"
@@ -30,8 +30,8 @@ const especieMap = { "01": "CAM CINZA" };
 function preencherFiltros() {
     preencherFiltroDinamico("dropdownEspecie", especieMap, "descricaoEspecie");
     preencherFiltroDinamico("dropdownApresentacao", apresentacaoMap, "descricaoApresentacao");
-    preencherFiltroDinamico("dropdownCondicao", condicaoMap, "descricaoCondicao");
     preencherFiltroDinamico("dropdownEstado", estadoMap, "descricaoEstado");
+    preencherFiltroDinamico("dropdownCondicao", condicaoMap, "descricaoCondicao");
     preencherFiltroDinamico("dropdownPacote", pacoteMap, "descricaoPacote");
     preencherFiltroDinamico("dropdownCaixa", caixaMap, "descricaoCaixa");
 }

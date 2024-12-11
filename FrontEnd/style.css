@@ -9,6 +9,20 @@
   text-align: right; /* Alinha o botão à direita */
   margin-top: 10px; /* Adiciona um pequeno espaçamento superior */
 }
+#botaoVoltar {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+.me-2 {
+  margin-right: 0.5rem; /* Ajuste o valor conforme necessário */
+}
+#verCamaroes {
+  width: 100%; /* O botão ocupará o mesmo tamanho do container */
+  text-align: center; /* Centraliza o texto dentro do botão */
+
+ 
+}
 
 body {
   background-color: #f8f9fa; /* Fundo branco suave */

@@ -4,7 +4,7 @@ CREATE TABLE produto (
     especie VARCHAR(50) NOT NULL,
     apresentacao VARCHAR(50) NOT NULL,
     estado VARCHAR(50) NOT NULL,
-    condicao VARCHAR(50) NOT NULL,
+    tipo_conservacao VARCHAR(50) NOT NULL,
     pecas VARCHAR(20),
     classificacao VARCHAR(20),
     pacote VARCHAR(20),

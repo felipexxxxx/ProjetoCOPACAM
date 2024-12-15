@@ -107,7 +107,7 @@ function AtualizarTabelaDescricaoCompleta() {
         const classificacaoCodigo = formatarClassificacao(classificacaoMinimaInput, classificacaoMaximaInput);
         const caixa = formatarCaixa(caixaInput);
         const pacote = formatarPacote(pacoteInput); // Garante que somente códigos válidos sejam formatados
-        descricaoCompleta = `${especie} ${apresentacao} ${condicao} ${estado} ${pecasCodigo} ${classificacaoCodigo} ${pacote} ${caixa}`;
+        descricaoCompleta = `${especie} ${apresentacao} ${estado} ${condicao}  ${pecasCodigo} ${classificacaoCodigo} ${pacote} ${caixa}`;
     }
 
     // Atualiza a nova tabela de descrição completa

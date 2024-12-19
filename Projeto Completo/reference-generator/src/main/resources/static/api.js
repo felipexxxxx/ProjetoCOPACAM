@@ -125,47 +125,41 @@ document.getElementById("criarProdutoInNatura").addEventListener("click", async 
  async function carregarCamaroes() {
     try {
         const response = await fetch("http://localhost:8080/produtos");
-        if (!response.ok) {
-            throw new Error("Erro ao buscar produtos: " + response.statusText);
-        }
-
         const produtos = await response.json();
-        const tabelaProdutos = document.getElementById("tabelaProdutos");
-        tabelaProdutos.innerHTML = ""; // Limpa a tabela
 
-        produtos.forEach(produto => {
-            const row = document.createElement("tr");
-            row.innerHTML = `
+        // Ordenar os produtos pelo código completo
+        produtos.sort((a, b) => a.codigoCompleto.localeCompare(b.codigoCompleto));
+
+        const tabelaProdutos = document.getElementById("tabelaProdutos");
+        tabelaProdutos.innerHTML = produtos.map(produto => `
+            <tr>
                 <td>${produto.codigoCompleto}</td>
                 <td>${produto.descricao}</td>
-            `;
-            tabelaProdutos.appendChild(row);
-        });
+            </tr>
+        `).join('');
     } catch (error) {
-        alert("Erro ao buscar camarões: " + error.message);
+        console.error("Erro ao carregar os produtos:", error);
     }
 }
 
 async function carregarProdutosInNatura() {
     try {
         const response = await fetch("http://localhost:8080/produtos/natura");
-        if (!response.ok) {
-            throw new Error("Erro ao buscar produtos IN NATURA: " + response.statusText);
-        }
-
         const produtosInNatura = await response.json();
-        const tabelaProdutosInNatura = document.getElementById("tabelaProdutosInNatura");
-        tabelaProdutosInNatura.innerHTML = ""; // Limpa a tabela
 
-        produtosInNatura.forEach(produto => {
-            const row = document.createElement("tr");
-            row.innerHTML = `
+        // Ordenar os produtos pelo código completo
+        produtosInNatura.sort((a, b) => a.codigoCompleto.localeCompare(b.codigoCompleto));
+
+        const tabelaProdutosInNatura = document.getElementById("tabelaProdutosInNatura");
+        tabelaProdutosInNatura.innerHTML = produtosInNatura.map(produto => `
+            <tr>
                 <td>${produto.codigoCompleto}</td>
                 <td>${produto.descricao}</td>
-            `;
-            tabelaProdutosInNatura.appendChild(row);
-        });
+            </tr>
+        `).join('');
     } catch (error) {
-        alert("Erro ao buscar camarões IN NATURA: " + error.message);
+        console.error("Erro ao carregar os produtos IN NATURA:", error);
     }
 }
+
+// Chamar as funções ao carregar a págin
